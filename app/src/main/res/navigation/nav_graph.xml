@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.tuwiaq.projectgame.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_stageFragment"
+            app:destination="@id/stageFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_achivFragment"
+            app:destination="@id/achivFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lvlOneFragment"
+        android:name="com.tuwiaq.projectgame.lvlOneFragment"
+        android:label="fragment_lvl_one"
+        tools:layout="@layout/fragment_lvl_one" />
+    <fragment
+        android:id="@+id/stageFragment"
+        android:name="com.tuwiaq.projectgame.StageFragment"
+        android:label="fragment_stage"
+        tools:layout="@layout/fragment_stage" >
+        <action
+            android:id="@+id/action_stageFragment_to_lvlOneFragment"
+            app:destination="@id/lvlOneFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/achivFragment"
+        android:name="com.tuwiaq.projectgame.AchivFragment"
+        android:label="fragment_achiv"
+        tools:layout="@layout/fragment_achiv" />
+</navigation>
