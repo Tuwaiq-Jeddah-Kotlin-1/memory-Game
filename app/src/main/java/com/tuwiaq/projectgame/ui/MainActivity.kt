@@ -1,7 +1,8 @@
-package com.tuwiaq.projectgame
+package com.tuwiaq.projectgame.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.tuwiaq.projectgame.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
