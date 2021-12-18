@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.tuwiaq.projectgame.MainFragment"
+        android:name="com.tuwiaq.projectgame.ui.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -19,9 +19,13 @@
     </fragment>
     <fragment
         android:id="@+id/lvlOneFragment"
-        android:name="com.tuwiaq.projectgame.lvlOneFragment"
+        android:name="com.tuwiaq.projectgame.ui.LvlFragment"
         android:label="fragment_lvl_one"
-        tools:layout="@layout/fragment_lvl_one" />
+        tools:layout="@layout/fragment_lvl_one" >
+        <argument
+            android:name="lvl"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/stageFragment"
         android:name="com.tuwiaq.projectgame.StageFragment"

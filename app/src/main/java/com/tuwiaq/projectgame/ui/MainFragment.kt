@@ -1,10 +1,11 @@
-package com.tuwiaq.projectgame
+package com.tuwiaq.projectgame.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.tuwiaq.projectgame.R
 
 class MainFragment : Fragment() {
 

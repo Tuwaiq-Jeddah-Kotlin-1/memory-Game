@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".ui.MainFragment">
 
 
     <Button
@@ -41,6 +41,54 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/stage_mode"
+        android:layout_width="300dp"
+        android:layout_height="380dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginEnd="61dp"
+        android:visibility="invisible"
+        android:layout_marginTop="300dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageButton
+            android:id="@+id/easy_lvl"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center|top"/>
+
+        <ImageButton
+            android:id="@+id/medium_lvl"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="53dp"
+            />
+
+        <ImageButton
+            android:id="@+id/hard_lvl"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="38dp"
+            />
+
+        <ImageButton
+            android:id="@+id/cust_lvl"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="130dp"
+            android:layout_gravity="center"/>
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
