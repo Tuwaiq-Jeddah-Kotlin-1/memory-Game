@@ -26,10 +26,17 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:padding="8dp"
                 android:text="score"
+                android:textSize="20dp" />
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_margin="8dp"
+                android:padding="8dp"
                 android:textSize="20dp" />
         </androidx.cardview.widget.CardView>
 
