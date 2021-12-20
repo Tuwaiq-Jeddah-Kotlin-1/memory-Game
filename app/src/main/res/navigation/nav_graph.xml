@@ -11,8 +11,8 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_stageFragment"
-            app:destination="@id/stageFragment" />
+            android:id="@+id/action_mainFragment_to_lvlOneFragment"
+            app:destination="@id/lvlOneFragment" />
         <action
             android:id="@+id/action_mainFragment_to_achivFragment"
             app:destination="@id/achivFragment" />

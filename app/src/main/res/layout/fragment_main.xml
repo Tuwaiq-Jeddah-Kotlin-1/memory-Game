@@ -11,8 +11,8 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/stage"
         android:layout_marginBottom="130dp"
+        android:text="@string/stage"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -42,14 +42,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/sin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="240dp"
+        android:text="@string/sign_in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/stage_mode"
         android:layout_width="300dp"
         android:layout_height="380dp"
         android:layout_marginStart="55dp"
+        android:layout_marginTop="300dp"
         android:layout_marginEnd="61dp"
         android:visibility="invisible"
-        android:layout_marginTop="300dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="8dp"
         app:layout_constraintBottom_toTopOf="@+id/button3"
@@ -62,31 +75,29 @@
             android:id="@+id/easy_lvl"
             android:layout_width="250dp"
             android:layout_height="70dp"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center|top"/>
+            android:layout_gravity="center|top"
+            android:layout_marginTop="15dp" />
 
         <ImageButton
             android:id="@+id/medium_lvl"
             android:layout_width="250dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="53dp"
-            />
+            android:layout_marginBottom="53dp" />
 
         <ImageButton
             android:id="@+id/hard_lvl"
             android:layout_width="250dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginTop="38dp"
-            />
+            android:layout_marginTop="38dp" />
 
         <ImageButton
             android:id="@+id/cust_lvl"
             android:layout_width="250dp"
             android:layout_height="70dp"
-            android:layout_marginTop="130dp"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="130dp" />
 
     </androidx.cardview.widget.CardView>
 
