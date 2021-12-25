@@ -2,10 +2,13 @@ package com.tuwiaq.projectgame.ui
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.nfc.Tag
@@ -20,6 +23,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.navigation.fragment.findNavController
@@ -41,6 +45,8 @@ class MainFragment : Fragment() {
     private lateinit var uploadImage: Button
     private lateinit var saveImage: Button
     private lateinit var customCard: Button
+    private lateinit var language_btn: Button
+    private lateinit var closeBtn: ImageButton
     private lateinit var btn_hard: ImageButton
     private lateinit var btn_easy: ImageButton
     private lateinit var btn_M: ImageButton
@@ -59,6 +65,10 @@ class MainFragment : Fragment() {
     private lateinit var card2: CardView
 
      private var LoadingDialog:Dialog? = null
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,8 +80,18 @@ class MainFragment : Fragment() {
         card = view.findViewById(R.id.stage_mode)
         card2 = view.findViewById(R.id.customCard)
         uploadImage =view.findViewById(R.id.upload)
-        saveImage = view.findViewById(R.id.saveImage)
         imageGalley = view.findViewById(R.id.imageLoa)
+        language_btn = view.findViewById(R.id.language)
+        closeBtn = view.findViewById(R.id.X)
+
+        val action = (activity as AppCompatActivity).supportActionBar
+        action?.title =resources.getString(R.string.app_name)
+
+        loadLoc()
+        language_btn.setOnClickListener {
+            showChangeLang()
+
+        }
 
 
 
@@ -103,6 +123,8 @@ class MainFragment : Fragment() {
                 {hideLoading()
 
                 },4000)
+
+
         }
         btn_hard = view.findViewById(R.id.hard_lvl)
         btn_hard.setOnClickListener {
@@ -128,7 +150,11 @@ class MainFragment : Fragment() {
         customCard.setOnClickListener {
             card2.background = resources.getDrawable(R.drawable.trick, null)
             card2.visibility = View.VISIBLE
+            closeBtn.setOnClickListener {
+                refreshCurrentFragment()
+            }
             initUI()
+
         }
 
 
@@ -237,6 +263,57 @@ class MainFragment : Fragment() {
             Log.e(Tag, "Error add the event ", e)
 
         }
+
+    }
+
+    fun showChangeLang(){
+        val b = arrayOf("english","عربي")
+        val hBuild = AlertDialog.Builder(context)
+        hBuild.setTitle("pick language")
+        hBuild.setPositiveButton("ok"){_,_->
+            refreshCurrentFragment()
+        }
+        hBuild.setSingleChoiceItems(b,-1){dialog,which ->
+            if (which == 0){
+                setLocle("ar")
+                refreshCurrentFragment()
+
+            }else{
+                setLocle("en")
+                refreshCurrentFragment()
+            }
+            dialog.dismiss()
+        }
+        val _dialog = hBuild.create()
+        _dialog.show()
+
+    }
+
+    private fun setLocle(s: String) {
+        val loc = Locale(s)
+        Locale.setDefault(loc)
+        val conf = Configuration()
+        conf.locale = loc
+        requireContext().resources.updateConfiguration(conf,requireContext().resources.displayMetrics)
+
+        var sharedpref1 = requireContext().getSharedPreferences("My_pref",MODE_PRIVATE)
+        var editor = sharedpref1.edit()
+        editor.putString("My_Lang",s)
+        editor.apply()
+
+
+    }
+    private fun loadLoc(){
+        var sher = requireContext().getSharedPreferences("My_pref",MODE_PRIVATE)
+        val lang = sher.getString("My_Lang","")
+        setLocle(lang.toString())
+    }
+
+    private fun refreshCurrentFragment() {
+           val id = findNavController().currentDestination?.id
+        findNavController().navigateUp()
+        findNavController().navigate(id!!)
+
 
     }
 

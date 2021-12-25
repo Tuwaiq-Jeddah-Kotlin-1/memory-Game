@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="stage">مرحلة</string>
+    <string name="achievement">الإنجازات</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="card_customize">تصميم البطاقات</string>
+    <string name="score">نتيجة</string>
+    <string name="time">الوقت</string>
+    <string name="upload_image">رفع الصورة</string>
+    <string name="en">انجليزي</string>
+    <string name="app_name">لعبة  الذاكرة</string>
+
+</resources>
