@@ -11,7 +11,7 @@
         android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:text="@string/en"
-        android:backgroundTint="@color/black"
+        android:background="@drawable/btn_shape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="130dp"
         android:text="@string/stage"
+        android:background="@drawable/btn_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -33,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/achievement"
+        android:background="@drawable/btn_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -46,6 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
         android:text="@string/card_customize"
+        android:background="@drawable/btn_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -58,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="240dp"
         android:text="@string/sign_in"
+        android:background="@drawable/btn_shape"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -70,7 +74,7 @@
         android:layout_width="300dp"
         android:layout_height="380dp"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="61dp"
         android:visibility="invisible"
         app:cardCornerRadius="8dp"
@@ -80,33 +84,44 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-        <ImageButton
+        <Button
             android:id="@+id/easy_lvl"
             android:layout_width="250dp"
             android:layout_height="70dp"
+            android:text="Level 1"
+            android:background="@drawable/btn_shape"
             android:layout_gravity="center|top"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="50dp" />
 
-        <ImageButton
+        <Button
             android:id="@+id/medium_lvl"
             android:layout_width="250dp"
             android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="53dp" />
+            android:text="Level 2"
+            android:background="@drawable/btn_shape"
 
-        <ImageButton
+            android:layout_gravity="center"
+          />
+
+        <Button
             android:id="@+id/hard_lvl"
             android:layout_width="250dp"
             android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="38dp" />
-
+            android:background="@drawable/btn_shape"
+            android:text="Level 3"
+            android:layout_marginTop="100dp"
+            android:layout_gravity="center"/>
         <ImageButton
-            android:id="@+id/cust_lvl"
-            android:layout_width="250dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="130dp" />
+            android:id="@+id/X1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="250dp"
+            android:background="@drawable/ic_baseline_close_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
     </androidx.cardview.widget.CardView>
 
@@ -152,11 +167,12 @@
 
             <Button
                 android:id="@+id/upload"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:text="@string/upload_image"
                 android:layout_marginTop="180dp"
                 android:visibility="visible"
+                android:background="@drawable/btn_shape"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
