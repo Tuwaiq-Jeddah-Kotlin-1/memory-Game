@@ -24,4 +24,8 @@ enum class NumberOfCard {
     fun numberOfCardToString(): String {
         return this.name
     }
+
+}
+fun String.toNumberOfCard (): NumberOfCard{
+    return  NumberOfCard.valueOf(this)
 }

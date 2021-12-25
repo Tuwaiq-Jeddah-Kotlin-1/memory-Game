@@ -13,10 +13,14 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.firebase.firestore.FirebaseFirestore
 import com.tuwiaq.projectgame.R
 import com.tuwiaq.projectgame.data.FlickerPhoto
+import com.tuwiaq.projectgame.data.Image2
+import com.tuwiaq.projectgame.data.Image2.Companion.toImage
+import com.tuwiaq.projectgame.ui.MainFragment.Companion.Tag
 import kotlinx.coroutines.*
-import kotlin.math.log
+import okhttp3.HttpUrl
 
 //var context: Context?
 class GameAdapter(
@@ -27,9 +31,7 @@ class GameAdapter(
     val cardNum: NumberOfCard,
 ) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
-
     val ar000 = mutableListOf<FlickerPhoto>()
-    private lateinit var sharedPreferences: SharedPreferences
 
     init {
         var ar0 = cards.shuffled()
@@ -38,15 +40,16 @@ class GameAdapter(
         ar000.addAll(ar01)
     }
 
-
     companion object {
         var answerList = mutableListOf<String>()
+        val Tag = "GameAdapter"
         var answer = ""
         var any = mutableListOf<Any>()
         var isClicked = false
         var hardTime = mutableListOf<Any>()
         const val STOCK_SHARED_KEY = "lastStockValue"
         var score = 0
+
 
 
     }
@@ -57,6 +60,7 @@ class GameAdapter(
 
     inner class ViewHolder(itemView: View, private var applicationContext: Context) :
         RecyclerView.ViewHolder(itemView) {
+
 
         var image = itemView.findViewById<ImageButton>(R.id.image_btn)
         var title = itemView.findViewById<TextView>(R.id.title)
@@ -69,10 +73,45 @@ class GameAdapter(
 
         @SuppressLint("CommitPrefEdits")
         fun bind(photo: FlickerPhoto?, position: Int) {
-            image.load(photo?.url)
+            image.load(photo?.url_s)
             title.text = photo?.title
 
+            val db by lazy { FirebaseFirestore.getInstance() }
+            var docRef = db.collection("ImageUrl").document("key")
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        frontImage.load(document.data.toString().replace("{ul=","").replace("}",""))
+                        println("document.data.toString()")
+
+                        println(document.data.toString().replace("{ul=","").replace("}",""))
+                        // Log.d(Tag, "DocumentSnapshot data: ${document.data}")
+                    } else {
+                        Log.d(Tag, "No such document")
+                    }
+                }
+
+
             val sp: SharedPreferences = context.getSharedPreferences("key", 0)
+
+            //get event by Id
+            /*    fun getEventData(): Image2? {
+                   val docRef = db.collection("ImageUrl").document("key")
+                   docRef.get()
+                       .addOnSuccessListener { document ->
+                           if (document != null) {
+                               Log.d(Tag, "DocumentSnapshot data: ${document.data}")
+                           } else {
+                               Log.d(Tag, "No such document")
+                           }
+                       }
+                       .addOnFailureListener { exception ->
+                           Log.d(Tag, "get failed with ", exception)
+                       }
+
+               }*/
+
+
 
             fun imageAnimation(
                 image: ImageButton,
@@ -135,7 +174,7 @@ class GameAdapter(
                         }
                         answer == title.text && image != any[0] -> {
                             answerList.add(answer)
-                            for (i in 0..answerList.lastIndex step(1)){
+                            for (i in 0..answerList.lastIndex step (1)) {
                                 score += 50
                                 // savedScore.text = score.toString()
                                 val sharedPreference = context.getSharedPreferences(
@@ -216,8 +255,9 @@ class GameAdapter(
 
 
         var photo = ar000[position]
-        holder.image.load(photo.url)
+        holder.image.load(photo.url_s)
         holder.title.text = photo.title
+
         holder.bind(photo, position)
 
 

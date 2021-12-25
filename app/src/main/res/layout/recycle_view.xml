@@ -24,7 +24,6 @@
             android:layout_gravity="center"
             android:background="@color/white"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_launcher_background"
             tools:ignore="SpeakableTextPresentCheck" />
 
 
