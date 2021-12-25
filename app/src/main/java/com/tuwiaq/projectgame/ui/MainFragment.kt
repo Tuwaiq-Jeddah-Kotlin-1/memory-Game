@@ -47,6 +47,7 @@ class MainFragment : Fragment() {
     private lateinit var customCard: Button
     private lateinit var language_btn: Button
     private lateinit var closeBtn: ImageButton
+    private lateinit var closeBtn1: ImageButton
     private lateinit var btn_hard: ImageButton
     private lateinit var btn_easy: ImageButton
     private lateinit var btn_M: ImageButton
@@ -83,6 +84,8 @@ class MainFragment : Fragment() {
         imageGalley = view.findViewById(R.id.imageLoa)
         language_btn = view.findViewById(R.id.language)
         closeBtn = view.findViewById(R.id.X)
+        closeBtn1 = view.findViewById(R.id.X1)
+
 
         val action = (activity as AppCompatActivity).supportActionBar
         action?.title =resources.getString(R.string.app_name)
@@ -98,6 +101,9 @@ class MainFragment : Fragment() {
         btn_stage.setOnClickListener {
             card.background = resources.getDrawable(R.drawable.trick, null)
             card.visibility = View.VISIBLE
+            closeBtn1.setOnClickListener {
+                refreshCurrentFragment()
+            }
 
         }
         btn_M = view.findViewById(R.id.medium_lvl)
