@@ -3,8 +3,8 @@ package com.tuwiaq.projectgame.ui
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,13 +16,10 @@ import coil.load
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tuwiaq.projectgame.R
 import com.tuwiaq.projectgame.data.FlickerPhoto
-import com.tuwiaq.projectgame.data.Image2
-import com.tuwiaq.projectgame.data.Image2.Companion.toImage
-import com.tuwiaq.projectgame.ui.MainFragment.Companion.Tag
-import kotlinx.coroutines.*
-import okhttp3.HttpUrl
 
-//var context: Context?
+import kotlinx.coroutines.*
+import java.util.logging.Handler
+
 class GameAdapter(
     var context: Context,
     var level: Int,
@@ -49,9 +46,6 @@ class GameAdapter(
         var hardTime = mutableListOf<Any>()
         const val STOCK_SHARED_KEY = "lastStockValue"
         var score = 0
-
-
-
     }
 
     interface CardClickListner {
@@ -61,58 +55,37 @@ class GameAdapter(
     inner class ViewHolder(itemView: View, private var applicationContext: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-
         var image = itemView.findViewById<ImageButton>(R.id.image_btn)
         var title = itemView.findViewById<TextView>(R.id.title)
-        var frontImage = itemView.findViewById<ImageButton>(R.id.image_front)
-        val savedScore = itemView.findViewById<TextView>(R.id.count)
+        var frontImage: ImageButton = itemView.findViewById(R.id.image_front)
         private lateinit var front_animato: AnimatorSet
         private lateinit var back_animato: AnimatorSet
         var isFront = true
         val isFrontList: MutableList<Boolean> = mutableListOf(isFront)
 
+
+
         @SuppressLint("CommitPrefEdits")
         fun bind(photo: FlickerPhoto?, position: Int) {
             image.load(photo?.url_s)
             title.text = photo?.title
-
             val db by lazy { FirebaseFirestore.getInstance() }
-            var docRef = db.collection("ImageUrl").document("key")
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        frontImage.load(document.data.toString().replace("{ul=","").replace("}",""))
-                        println("document.data.toString()")
 
-                        println(document.data.toString().replace("{ul=","").replace("}",""))
-                        // Log.d(Tag, "DocumentSnapshot data: ${document.data}")
-                    } else {
-                        Log.d(Tag, "No such document")
+                var docRef = db.collection("ImageUrl").document("key")
+                docRef.get()
+                    .addOnSuccessListener { document ->
+                        if (document != null) {
+                            frontImage.load(
+                                document.data.toString().replace("{ul=", "").replace("}", "")
+                            )
+                            println("document.data.toString()")
+
+                            println(document.data.toString().replace("{ul=", "").replace("}", ""))
+                        } else {
+                            frontImage.setBackgroundResource(R.drawable.backg)
+                            Log.d(Tag, "No such document")
+                        }
                     }
-                }
-
-
-            val sp: SharedPreferences = context.getSharedPreferences("key", 0)
-
-            //get event by Id
-            /*    fun getEventData(): Image2? {
-                   val docRef = db.collection("ImageUrl").document("key")
-                   docRef.get()
-                       .addOnSuccessListener { document ->
-                           if (document != null) {
-                               Log.d(Tag, "DocumentSnapshot data: ${document.data}")
-                           } else {
-                               Log.d(Tag, "No such document")
-                           }
-                       }
-                       .addOnFailureListener { exception ->
-                           Log.d(Tag, "get failed with ", exception)
-                       }
-
-               }*/
-
-
-
             fun imageAnimation(
                 image: ImageButton,
                 frontImage: ImageButton,
@@ -154,6 +127,7 @@ class GameAdapter(
             //--------------------------------------------
 
             image.setOnClickListener {
+
                 if (isClicked) {
 
                 } else {
@@ -241,6 +215,8 @@ class GameAdapter(
                 }
             }
         }
+
+
 
 
     }

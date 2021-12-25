@@ -32,6 +32,7 @@ android {
         jvmTarget = '1.8'
     }
 }
+def lottieVersion = '4.2.2'
 
 dependencies {
 
@@ -70,6 +71,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'
 
     implementation "androidx.cardview:cardview:1.0.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
 
     testImplementation 'junit:junit:4.+'
