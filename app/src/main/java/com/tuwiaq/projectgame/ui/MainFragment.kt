@@ -2,6 +2,7 @@ package com.tuwiaq.projectgame.ui
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -57,7 +58,7 @@ class MainFragment : Fragment() {
     private lateinit var card: CardView
     private lateinit var card2: CardView
 
-
+     private var LoadingDialog:Dialog? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -73,6 +74,7 @@ class MainFragment : Fragment() {
         imageGalley = view.findViewById(R.id.imageLoa)
 
 
+
         btn_stage.setOnClickListener {
             card.background = resources.getDrawable(R.drawable.trick, null)
             card.visibility = View.VISIBLE
@@ -83,6 +85,11 @@ class MainFragment : Fragment() {
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.MEDIUM.numberOfCardToString())
             findNavController().navigate(action)
+            showLoading()
+            android.os.Handler().postDelayed(
+                {hideLoading()
+
+                },4000)
         }
 
         btn_easy = view.findViewById(R.id.easy_lvl)
@@ -90,12 +97,23 @@ class MainFragment : Fragment() {
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.EASY.numberOfCardToString())
             findNavController().navigate(action)
+
+            showLoading()
+            android.os.Handler().postDelayed(
+                {hideLoading()
+
+                },4000)
         }
         btn_hard = view.findViewById(R.id.hard_lvl)
         btn_hard.setOnClickListener {
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.HARD.numberOfCardToString())
             findNavController().navigate(action)
+            showLoading()
+            android.os.Handler().postDelayed(
+                {hideLoading()
+
+                },4000)
         }
 
         sign_in = view.findViewById(R.id.sin)
@@ -166,6 +184,15 @@ class MainFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun hideLoading(){
+        LoadingDialog?.let {
+            if (it.isShowing)it.cancel()
+        }
+    }
+    private fun showLoading(){
+        hideLoading()
+        LoadingDialog = CustomProgressDialog.showLoaingDialog(requireContext())
     }
     private fun pickImageFromGallery(){
 
