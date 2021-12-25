@@ -57,25 +57,27 @@ class LvlFragment : Fragment() {
         recyclerView = view.findViewById(R.id.rvRecycleView)
 
         savedScore = view.findViewById(R.id.count)
-        val sharedPreference=context!!.getSharedPreferences(STOCK_SHARED_KEY, Context.MODE_PRIVATE)
+
 
         recyclerView.setHasFixedSize(true)
 
+
+        savedScore.text = vm.gameScore.toString()
+
         recyclerView.layoutManager = GridLayoutManager(context, cardNum.getWidth())
         vm.fetchIntrestingList(levelHeight / 2).observe(viewLifecycleOwner) {
+
             recyclerView.adapter = GameAdapter(
                 requireContext(),
                 levelHeight,
                 it.photos.photo,
                 object : GameAdapter.CardClickListner {
                     override fun onClick(position: Int, applicationContext: Context) {
-                        image = view.findViewById<ImageButton>(R.id.image_btn)
-                        savedScore.text = sharedPreference.getInt("username", 0).toString()
-
+                      //  image = view.findViewById<ImageButton>(R.id.image_btn)
                         Log.e("lvl fragment", savedScore.toString())
-
+                        savedScore.text = vm.gameScore.toString()
                     }
-                }, cardNum
+                }, cardNum,vm1 = vm
             )
 
 
