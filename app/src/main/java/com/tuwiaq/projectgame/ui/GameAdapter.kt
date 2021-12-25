@@ -11,11 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tuwiaq.projectgame.R
 import com.tuwiaq.projectgame.data.FlickerPhoto
+import com.tuwiaq.projectgame.model.MainViewModel
 
 import kotlinx.coroutines.*
 import java.util.logging.Handler
@@ -25,27 +28,36 @@ class GameAdapter(
     var level: Int,
     val cards: List<FlickerPhoto>,
     private var cardClickListner: CardClickListner,
-    val cardNum: NumberOfCard,
+    val cardNum: NumberOfCard,var vm1:MainViewModel
 ) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
+
     val ar000 = mutableListOf<FlickerPhoto>()
+    var correctCount = 0
+    val maxCorrect = cards.size
+    var answerList = mutableListOf<String>()
+    var any = mutableListOf<Any>()
+    var hardTime = mutableListOf<Any>()
+    val Tag = "GameAdapter"
+    var answer = ""
+    var score = 0
+
 
     init {
         var ar0 = cards.shuffled()
         var ar01 = ar0.shuffled()
         ar000.addAll(ar0)
         ar000.addAll(ar01)
+       // vm1.gameScore = 0
+
+
+        //   score = vm1.getSaveSco().toInt()
     }
 
     companion object {
-        var answerList = mutableListOf<String>()
-        val Tag = "GameAdapter"
-        var answer = ""
-        var any = mutableListOf<Any>()
         var isClicked = false
-        var hardTime = mutableListOf<Any>()
         const val STOCK_SHARED_KEY = "lastStockValue"
-        var score = 0
+      //  var score = 0
     }
 
     interface CardClickListner {
@@ -62,8 +74,6 @@ class GameAdapter(
         private lateinit var back_animato: AnimatorSet
         var isFront = true
         val isFrontList: MutableList<Boolean> = mutableListOf(isFront)
-
-
 
         @SuppressLint("CommitPrefEdits")
         fun bind(photo: FlickerPhoto?, position: Int) {
@@ -127,7 +137,6 @@ class GameAdapter(
             //--------------------------------------------
 
             image.setOnClickListener {
-
                 if (isClicked) {
 
                 } else {
@@ -148,21 +157,20 @@ class GameAdapter(
                         }
                         answer == title.text && image != any[0] -> {
                             answerList.add(answer)
-                            for (i in 0..answerList.lastIndex step (1)) {
-                                score += 50
-                                // savedScore.text = score.toString()
-                                val sharedPreference = context.getSharedPreferences(
-                                    STOCK_SHARED_KEY,
-                                    Context.MODE_PRIVATE
-                                )
-                                var editor = sharedPreference.edit()
-                                editor.putInt("username", score)
-                                editor.apply()
-                                Log.e("this is adapter score", score.toString())
-
-                            }
                             answer = ""
                             imageAnimation(image, frontImage, isFrontList)
+                            score += 50
+                            vm1.gameScore = score
+                            // savedScore.text = score.toString()
+                             // vm1.saveScore(score)
+
+                            Log.e("this is adapter score", score.toString())
+                            cardClickListner.onClick(position, context)
+                            correctCount++
+                            if (correctCount == maxCorrect) {
+                                vm1.saveScore(score)
+                                Toast.makeText(context,"YOu WOn",Toast.LENGTH_SHORT).show()
+                            }
                         }
                         else -> {
                             isClicked = !isClicked
@@ -179,9 +187,10 @@ class GameAdapter(
                                     )
                                 }
                                 isClicked = !isClicked
-                            }
 
-                            cardClickListner.onClick(position, context)
+
+                            }
+//                            cardClickListner.onClick(position, context)
                         }
                     }
                 }
@@ -217,8 +226,6 @@ class GameAdapter(
         }
 
 
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -229,13 +236,11 @@ class GameAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-
         var photo = ar000[position]
         holder.image.load(photo.url_s)
         holder.title.text = photo.title
-
+        holder.title.textSize = 0.0f
         holder.bind(photo, position)
-
 
     }
 

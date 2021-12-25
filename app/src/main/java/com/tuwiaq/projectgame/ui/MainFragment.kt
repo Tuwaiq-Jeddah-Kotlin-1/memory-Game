@@ -19,13 +19,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -34,6 +32,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.tuwiaq.projectgame.model.MainViewModel
 
 import kotlinx.coroutines.tasks.await
 import java.util.*
@@ -48,9 +47,10 @@ class MainFragment : Fragment() {
     private lateinit var language_btn: Button
     private lateinit var closeBtn: ImageButton
     private lateinit var closeBtn1: ImageButton
-    private lateinit var btn_hard: ImageButton
-    private lateinit var btn_easy: ImageButton
-    private lateinit var btn_M: ImageButton
+    private lateinit var btn_hard: Button
+    private lateinit var btn_easy: Button
+    private lateinit var btn_M: Button
+    private lateinit var total: TextView
     private lateinit var imageGalley:ImageView
     private lateinit var googleSignInClient: GoogleSignInClient
     val rc_sgin_in = 0
@@ -61,6 +61,9 @@ class MainFragment : Fragment() {
         val Tag = "MainFragment"
     }
   private val db by lazy { FirebaseFirestore.getInstance() }
+    private val vm by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
 
     private lateinit var card: CardView
     private lateinit var card2: CardView
@@ -85,6 +88,8 @@ class MainFragment : Fragment() {
         language_btn = view.findViewById(R.id.language)
         closeBtn = view.findViewById(R.id.X)
         closeBtn1 = view.findViewById(R.id.X1)
+        total = view.findViewById(R.id.total_sco)
+        total.text = vm.getSaveSco()
 
 
         val action = (activity as AppCompatActivity).supportActionBar
@@ -95,8 +100,6 @@ class MainFragment : Fragment() {
             showChangeLang()
 
         }
-
-
 
         btn_stage.setOnClickListener {
             card.background = resources.getDrawable(R.drawable.trick, null)
@@ -162,8 +165,6 @@ class MainFragment : Fragment() {
             initUI()
 
         }
-
-
 
         return view
     }
@@ -295,18 +296,16 @@ class MainFragment : Fragment() {
 
     }
 
-    private fun setLocle(s: String) {
+    private fun setLocle(s: String){
         val loc = Locale(s)
         Locale.setDefault(loc)
         val conf = Configuration()
         conf.locale = loc
         requireContext().resources.updateConfiguration(conf,requireContext().resources.displayMetrics)
-
         var sharedpref1 = requireContext().getSharedPreferences("My_pref",MODE_PRIVATE)
         var editor = sharedpref1.edit()
         editor.putString("My_Lang",s)
         editor.apply()
-
 
     }
     private fun loadLoc(){
@@ -320,10 +319,7 @@ class MainFragment : Fragment() {
         findNavController().navigateUp()
         findNavController().navigate(id!!)
 
-
     }
-
-
 }
 
 

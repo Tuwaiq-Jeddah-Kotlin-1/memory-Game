@@ -1,15 +1,28 @@
 package com.tuwiaq.projectgame.model
 
+import android.app.Application
+import android.content.Context
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.tuwiaq.projectgame.data.FlickerData
 import com.tuwiaq.projectgame.ui.GameAdapter
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class MainViewModel(context: Application) : AndroidViewModel(context) {
+    val sharedPreference = context.getSharedPreferences(
+        GameAdapter.STOCK_SHARED_KEY,
+        Context.MODE_PRIVATE)
+    var editor = sharedPreference.edit()
+
+    fun saveScore(score1:Int){
+        editor.putInt("username", getSaveSco().toInt() + score1)
+        editor.apply()
+    }
+    fun getSaveSco() = sharedPreference.getInt("username", 0).toString()
+    var gameScore = 0
+
+
+
 
     val repo = FlickrRepo()
 
