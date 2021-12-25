@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "949627001902",
-    "project_id": "memo1-19783973",
-    "storage_bucket": "memo1-19783973.appspot.com"
+    "project_number": "287639459567",
+    "project_id": "memo-game-b45af",
+    "storage_bucket": "memo-game-b45af.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:949627001902:android:3841fb80cc189adb6a53bf",
+        "mobilesdk_app_id": "1:287639459567:android:52b8d0c885a45653baed1a",
         "android_client_info": {
           "package_name": "com.tuwiaq.projectgame"
         }
       },
       "oauth_client": [
         {
-          "client_id": "949627001902-g746cnm9pep7308ff9od8utcp914nbei.apps.googleusercontent.com",
+          "client_id": "287639459567-4o7l74fogk5mncvg82aoj23amg8l2da8.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCAwSlx5qYkPYePuIPFIn26SKOsN-vnSCo"
+          "current_key": "AIzaSyBUfpUWgcXjgtxBEVaYDgpWFBmZDMl-axE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "949627001902-g746cnm9pep7308ff9od8utcp914nbei.apps.googleusercontent.com",
+              "client_id": "287639459567-4o7l74fogk5mncvg82aoj23amg8l2da8.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
