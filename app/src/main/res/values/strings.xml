@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">Project Game</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="stage">Stage</string>
     <string name="achievement">Achievement</string>
-    <string name="bored_custom">Bored custom</string>
     <string name="sign_in">sign-in</string>
     <string name="card_customize">card customize</string>
+    <string name="score">score</string>
+    <string name="time">time</string>
+    <string name="upload_image">upload Image</string>
+    <string name="en">en</string>
+    <string name="app_name">Memory Game</string>
 </resources>
