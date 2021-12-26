@@ -30,11 +30,9 @@ class LvlFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-
     companion object {
         private const val Tag = "MainActivity"
     }
-
     private lateinit var cardNum: NumberOfCard
 
     override fun onCreateView(
@@ -77,7 +75,7 @@ class LvlFragment : Fragment() {
                         Log.e("lvl fragment", savedScore.toString())
                         savedScore.text = vm.gameScore.toString()
                     }
-                }, cardNum,vm1 = vm
+                },cardNum,vm1 = vm
             )
 
 

@@ -9,5 +9,8 @@
     <string name="upload_image">رفع الصورة</string>
     <string name="en">انجليزي</string>
     <string name="app_name">لعبة  الذاكرة</string>
+    <string name="english">انجليزي</string>
+    <string name="arabic">عربي</string>
+    <string name="language">اللغة</string>
 
 </resources>

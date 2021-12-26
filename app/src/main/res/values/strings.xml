@@ -8,4 +8,7 @@
     <string name="upload_image">upload Image</string>
     <string name="en">en</string>
     <string name="app_name">Memory Game</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
+    <string name="language">Language</string>
 </resources>
