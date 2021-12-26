@@ -21,9 +21,6 @@ class MainViewModel(context: Application) : AndroidViewModel(context) {
     fun getSaveSco() = sharedPreference.getInt("username", 0).toString()
     var gameScore = 0
 
-
-
-
     val repo = FlickrRepo()
 
     fun fetchIntrestingList(i: Int): LiveData<FlickerData> {
@@ -39,7 +36,5 @@ class MainViewModel(context: Application) : AndroidViewModel(context) {
         }
         return photos
     }
-  /*  fun getImageById(ImageId: String) = viewModelScope.launch {
-        _image.value = GameAdapter.FirebaseEventService.getImageData(ImageId)
-    }*/
+
 }

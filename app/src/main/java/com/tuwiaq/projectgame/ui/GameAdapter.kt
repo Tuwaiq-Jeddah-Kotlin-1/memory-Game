@@ -3,16 +3,22 @@ package com.tuwiaq.projectgame.ui
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.cardview.widget.CardView
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.firebase.firestore.FirebaseFirestore
@@ -70,6 +76,7 @@ class GameAdapter(
         var image = itemView.findViewById<ImageButton>(R.id.image_btn)
         var title = itemView.findViewById<TextView>(R.id.title)
         var frontImage: ImageButton = itemView.findViewById(R.id.image_front)
+//        var home:Button = itemView.findViewById(R.id.homePage)
         private lateinit var front_animato: AnimatorSet
         private lateinit var back_animato: AnimatorSet
         var isFront = true
@@ -169,6 +176,7 @@ class GameAdapter(
                             correctCount++
                             if (correctCount == maxCorrect) {
                                 vm1.saveScore(score)
+                                dialogWin(it)
                                 Toast.makeText(context,"YOu WOn",Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -232,6 +240,22 @@ class GameAdapter(
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycle_view, parent, false)
 
         return ViewHolder(view, context)
+    }
+    fun dialogWin(view:View){
+        val view = View.inflate(context,R.layout.dialog_win,null)
+        val builder = AlertDialog.Builder(context)
+        builder.setView(view)
+        val dialog = builder.create()
+        dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        var home = view.findViewById<Button>(R.id.homePage)
+        home.setOnClickListener {
+
+            view.getContext().startActivity(Intent(view.getContext(), MainActivity::class.java))
+
+        }
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

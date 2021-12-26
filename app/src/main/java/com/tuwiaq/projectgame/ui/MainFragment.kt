@@ -15,10 +15,8 @@ import android.nfc.Tag
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
@@ -71,7 +69,7 @@ class MainFragment : Fragment() {
      private var LoadingDialog:Dialog? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+           setHasOptionsMenu(true)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,14 +89,12 @@ class MainFragment : Fragment() {
         total = view.findViewById(R.id.total_sco)
         total.text = vm.getSaveSco()
 
-
         val action = (activity as AppCompatActivity).supportActionBar
         action?.title =resources.getString(R.string.app_name)
 
         loadLoc()
         language_btn.setOnClickListener {
             showChangeLang()
-
         }
 
         btn_stage.setOnClickListener {
@@ -195,10 +191,9 @@ class MainFragment : Fragment() {
                     pickImageFromGallery()
                 }
             }
-
-
-
     }
+
+
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray)
     {
         when(requestCode)
@@ -243,6 +238,7 @@ class MainFragment : Fragment() {
             addEvent(data?.data!!)
         }
     }
+
      fun addEvent( imageUri: Uri) {
         val formatter = SimpleDateFormat("yyy-MM-dd-HH-mm-ss")
         val now = Date()
@@ -320,6 +316,7 @@ class MainFragment : Fragment() {
         findNavController().navigate(id!!)
 
     }
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.tuwiaq.projectgame.ui
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.graphics.BlendMode
@@ -9,6 +10,7 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.view.View
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.core.graphics.drawable.toDrawable
@@ -26,6 +28,17 @@ object CustomProgressDialog {
             return it
         }
     }
+
+/*    object dailogWin1{
+        fun win(){
+            val view = View.inflate(context,R.layout.dialog_win,null)
+            val builder = AlertDialog.Builder(context)
+            builder.setView(view)
+            val dialog = builder.create()
+            dialog.show()
+            dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        }
+    }*/
 
 /*    fun show (context: Context):Dialog{
         return show(context,null)
