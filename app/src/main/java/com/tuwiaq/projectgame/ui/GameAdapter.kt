@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -248,7 +249,6 @@ class GameAdapter(
         val dialog = builder.create()
         dialog.show()
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
         var home = view.findViewById<Button>(R.id.homePage)
         home.setOnClickListener {
 
