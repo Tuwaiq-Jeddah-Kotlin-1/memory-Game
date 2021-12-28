@@ -16,6 +16,12 @@
         <action
             android:id="@+id/action_mainFragment_to_achivFragment"
             app:destination="@id/achivFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+        <argument
+            android:name="emai"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/lvlOneFragment"
@@ -40,4 +46,22 @@
         android:name="com.tuwiaq.projectgame.AchivFragment"
         android:label="fragment_achiv"
         tools:layout="@layout/fragment_achiv" />
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.tuwiaq.projectgame.signInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/logInFragment"
+        android:name="com.tuwiaq.projectgame.LogInFragment"
+        android:label="fragment_log_in"
+        tools:layout="@layout/fragment_log_in" >
+        <action
+            android:id="@+id/action_logInFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 </navigation>
