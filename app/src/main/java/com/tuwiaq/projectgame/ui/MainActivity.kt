@@ -1,23 +1,46 @@
 package com.tuwiaq.projectgame.ui
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+
 import androidx.work.*
 import com.tuwiaq.projectgame.R
+
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
+        var sher = this.getSharedPreferences("My_pref", MODE_PRIVATE)
+        val lang = sher.getString("My_Lang", "")
+        lang.let {
+           setLocle(lang.toString())
+        }
 
         myWorkerManger()
     }
+    private fun setLocle(s: String) {
+        val loc = Locale(s)
+        Locale.setDefault(loc)
+        val conf = Configuration()
+        conf.locale = loc
+        this.resources.updateConfiguration(
+            conf,
+            this.resources.displayMetrics
+        )
+        var sharedpref1 = this.getSharedPreferences("My_pref", MODE_PRIVATE)
+        var editor = sharedpref1.edit()
+        editor.putString("My_Lang", s)
+        editor.apply()
+
+    }
+
 
     private fun myWorkerManger() {
         val constraints = Constraints.Builder()

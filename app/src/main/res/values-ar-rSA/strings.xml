@@ -12,5 +12,10 @@
     <string name="english">انجليزي</string>
     <string name="arabic">عربي</string>
     <string name="language">اللغة</string>
+    <string name="forget_password">Forget password?</string>
+    <string name="Please_wait">Please wait</string>
+    <string name="Logging_in">Logging in...</string>
+    <string name="Invalid_email_format">Invalid email format</string>
+    <string name="Please_enter_password">Please enter password</string>
 
 </resources>

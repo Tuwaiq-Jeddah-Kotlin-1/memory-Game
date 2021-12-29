@@ -1,7 +1,10 @@
 package com.tuwiaq.projectgame
 
 import android.app.ActionBar
+import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.DialogInterface
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
@@ -9,10 +12,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
@@ -24,6 +24,7 @@ class LogInFragment : Fragment() {
     private lateinit var progressBar: ProgressDialog
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var login: Button
+    private lateinit var forgetPass: Button
     private lateinit var noAcc: TextView
     private lateinit var ema: TextInputLayout
     private lateinit var pass: TextInputLayout
@@ -39,10 +40,11 @@ class LogInFragment : Fragment() {
         noAcc = view.findViewById(R.id.noAccTv)
         ema = view.findViewById(R.id.email)
         pass = view.findViewById(R.id.password_til)
+      // forgetPass = view.findViewById(R.id.forget)
 
         progressBar = ProgressDialog(context)
-        progressBar.setTitle("Please wait")
-        progressBar.setMessage("Logging in...")
+        progressBar.setTitle(getString(R.string.Please_wait))
+        progressBar.setMessage(getString(R.string.Logging_in))
         progressBar.setCanceledOnTouchOutside(false)
 
         firebaseAuth = FirebaseAuth.getInstance()
@@ -53,27 +55,66 @@ class LogInFragment : Fragment() {
             refreshCurrentFragment()
 
         }
+/*        forgetPass.setOnClickListener {
+            println("-------------")
+            val build = AlertDialog.Builder(context)
+            build.setTitle("Forget Password")
+            val view = layoutInflater.inflate(R.layout.forget_pass_dialog,null)
+            build.setView(view)
+            val userName:EditText = view.findViewById<EditText>(R.id.userName)
+            build.setPositiveButton("Reset", DialogInterface.OnClickListener { _, _ ->
+                forgetPassword(userName)
+            })
+
+            build.setNegativeButton("Close",DialogInterface.OnClickListener{
+                    _,_ ->
+                build.show()
+            })
+        }*/
 
         login.setOnClickListener {
              validDate()
 
             findNavController().navigate(R.id.mainFragment)
         }
+
         return view
     }
+
+  /*  private fun forgetPassword(userName:EditText) {
+        if (userName.text.toString().trim().isEmpty()){
+            Toast.makeText(context,"Please enter your email",Toast.LENGTH_SHORT).show()
+
+        }
+
+        if (!Patterns.EMAIL_ADDRESS.matcher(userName.text.toString()).matches()) {
+            return
+        }
+        firebaseAuth.sendPasswordResetEmail(userName.text.toString())
+            .addOnCompleteListener{task ->
+                if (task.isSuccessful){
+                    Toast.makeText(context,"Email sent",Toast.LENGTH_SHORT).show()
+
+                }
+
+
+            }
+
+    }*/
 
     private fun validDate() {
             email = ema.toString().trim()
           password = pass.toString().trim()
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            ema.error = "Invalid email format"
+            ema.error = getString(R.string.Invalid_email_format)
         }else if (TextUtils.isEmpty(password)){
-            pass.error = "Please enter password"
+            pass.error = getString(R.string.Please_enter_password)
         }else{
             firebaseLogin()
         }
 
      }
+
 
     private fun firebaseLogin() {
         progressBar.show()
