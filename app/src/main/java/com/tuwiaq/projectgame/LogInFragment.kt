@@ -40,7 +40,7 @@ class LogInFragment : Fragment() {
         noAcc = view.findViewById(R.id.noAccTv)
         ema = view.findViewById(R.id.email)
         pass = view.findViewById(R.id.password_til)
-      // forgetPass = view.findViewById(R.id.forget)
+       forgetPass = view.findViewById(R.id.forget)
 
         progressBar = ProgressDialog(context)
         progressBar.setTitle(getString(R.string.Please_wait))
@@ -55,22 +55,9 @@ class LogInFragment : Fragment() {
             refreshCurrentFragment()
 
         }
-/*        forgetPass.setOnClickListener {
-            println("-------------")
-            val build = AlertDialog.Builder(context)
-            build.setTitle("Forget Password")
-            val view = layoutInflater.inflate(R.layout.forget_pass_dialog,null)
-            build.setView(view)
-            val userName:EditText = view.findViewById<EditText>(R.id.userName)
-            build.setPositiveButton("Reset", DialogInterface.OnClickListener { _, _ ->
-                forgetPassword(userName)
-            })
-
-            build.setNegativeButton("Close",DialogInterface.OnClickListener{
-                    _,_ ->
-                build.show()
-            })
-        }*/
+         forgetPass.setOnClickListener {
+             findNavController().navigate(R.id.forgetPasswordFragment)
+         }
 
         login.setOnClickListener {
              validDate()
@@ -81,26 +68,6 @@ class LogInFragment : Fragment() {
         return view
     }
 
-  /*  private fun forgetPassword(userName:EditText) {
-        if (userName.text.toString().trim().isEmpty()){
-            Toast.makeText(context,"Please enter your email",Toast.LENGTH_SHORT).show()
-
-        }
-
-        if (!Patterns.EMAIL_ADDRESS.matcher(userName.text.toString()).matches()) {
-            return
-        }
-        firebaseAuth.sendPasswordResetEmail(userName.text.toString())
-            .addOnCompleteListener{task ->
-                if (task.isSuccessful){
-                    Toast.makeText(context,"Email sent",Toast.LENGTH_SHORT).show()
-
-                }
-
-
-            }
-
-    }*/
 
     private fun validDate() {
             email = ema.toString().trim()
