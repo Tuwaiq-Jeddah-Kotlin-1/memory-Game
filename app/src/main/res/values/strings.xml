@@ -19,4 +19,9 @@
     <string name="level_3">Level 3</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="not_have_account_signup">Not have account? <b>SignUp</b></string>
+    <string name="forget_password">Forget password?</string>
+    <string name="Please_wait">Please wait</string>
+    <string name="Logging_in">Logging in...</string>
+    <string name="Invalid_email_format">Invalid email format</string>
+    <string name="Please_enter_password">Please enter password</string>
 </resources>

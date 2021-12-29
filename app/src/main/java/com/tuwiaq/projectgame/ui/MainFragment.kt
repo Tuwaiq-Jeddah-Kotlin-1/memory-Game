@@ -120,7 +120,7 @@ class MainFragment : Fragment() {
         /*  val action = (activity as AppCompatActivity).supportActionBar
           action?.title = resources.getString(R.string.app_name)*/
 
-        loadLoc()
+
         language_btn.setOnClickListener {
             showChangeLang()
         }
@@ -377,7 +377,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    val imageRef = Firebase.storage.reference
+  //  val imageRef = Firebase.storage.reference
 
     private fun deleteFile() = CoroutineScope(Dispatchers.IO).launch {
         try {

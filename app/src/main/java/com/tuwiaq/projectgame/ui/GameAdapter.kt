@@ -20,8 +20,11 @@ import android.widget.Toast.LENGTH_SHORT
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tuwiaq.projectgame.R
 import com.tuwiaq.projectgame.data.FlickerPhoto
@@ -80,6 +83,8 @@ class GameAdapter(
 //        var home:Button = itemView.findViewById(R.id.homePage)
         private lateinit var front_animato: AnimatorSet
         private lateinit var back_animato: AnimatorSet
+        private lateinit var firebase: FirebaseAuth
+
         var isFront = true
         val isFrontList: MutableList<Boolean> = mutableListOf(isFront)
 
@@ -88,8 +93,10 @@ class GameAdapter(
             image.load(photo?.url_s)
             title.text = photo?.title
             val db by lazy { FirebaseFirestore.getInstance() }
+            firebase = FirebaseAuth.getInstance()
 
-                var docRef = db.collection("ImageUrl").document("key")
+            var docRef = firebase.currentUser?.uid?.let { db.collection("ImageUrl").document(it) }
+            if (docRef != null) {
                 docRef.get()
                     .addOnSuccessListener { document ->
                         if (document != null) {
@@ -104,6 +111,7 @@ class GameAdapter(
                             Log.d(Tag, "No such document")
                         }
                     }
+            }
             fun imageAnimation(
                 image: ImageButton,
                 frontImage: ImageButton,
@@ -251,6 +259,10 @@ class GameAdapter(
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         var home = view.findViewById<Button>(R.id.homePage)
         home.setOnClickListener {
+
+          /*  val action =
+                MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.MEDIUM.numberOfCardToString())
+            findNavController(view).navigate(action)*/
 
             view.getContext().startActivity(Intent(view.getContext(), MainActivity::class.java))
 

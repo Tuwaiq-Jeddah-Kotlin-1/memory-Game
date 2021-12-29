@@ -14,13 +14,13 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 
-class signInFragment : Fragment() {
+class SignInFragment : Fragment() {
 
     private lateinit var progressBar: ProgressDialog
     private lateinit var firebaseAuth: FirebaseAuth
-private lateinit var  signInBtn:Button
-private lateinit var emailET :EditText
-private lateinit var passwordEt :EditText
+    private lateinit var signInBtn: Button
+    private lateinit var emailET: EditText
+    private lateinit var passwordEt: EditText
     private var email = ""
     private var password = ""
 
@@ -29,15 +29,15 @@ private lateinit var passwordEt :EditText
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view =  inflater.inflate(R.layout.fragment_sign_in, container, false)
+        val view = inflater.inflate(R.layout.fragment_sign_in, container, false)
         signInBtn = view.findViewById(R.id.signInBtn)
         passwordEt = view.findViewById(R.id.passwordEt)
         emailET = view.findViewById(R.id.emailET)
 
 
         progressBar = ProgressDialog(context)
-        progressBar.setTitle("Please wait")
-        progressBar.setMessage("Creating Account In...")
+        progressBar.setTitle(getString(R.string.Please_wait))
+        progressBar.setMessage(getString(R.string.Logging_in))
         progressBar.setCanceledOnTouchOutside(false)
 
         firebaseAuth = FirebaseAuth.getInstance()
@@ -56,13 +56,13 @@ private lateinit var passwordEt :EditText
         email = emailET.text.toString().trim()
         password = passwordEt.text.toString().trim()
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailET.error = "Invalid email format"
-        }else if (TextUtils.isEmpty(password)){
+        } else if (TextUtils.isEmpty(password)) {
             passwordEt.error = "Please enter password"
-        }else if(password.length < 6){
+        } else if (password.length < 6) {
             passwordEt.error = "Password must atleast 6 chracters long "
-        }else{
+        } else {
             firebaseSignUp()
         }
     }
@@ -77,18 +77,19 @@ private lateinit var passwordEt :EditText
     private fun firebaseSignUp() {
         progressBar.show()
 
-        firebaseAuth.createUserWithEmailAndPassword(email,password)
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 progressBar.dismiss()
                 val firebase = firebaseAuth.currentUser
                 val email = firebase!!.email
-                Toast.makeText(requireContext(),"Account Created with $email", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Account Created with $email", Toast.LENGTH_SHORT)
+                    .show()
                 // activity intent profile
 
 
             }.addOnFailureListener {
                 progressBar.dismiss()
-                Toast.makeText(requireContext(),"Sign Up failed ", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Sign Up failed ", Toast.LENGTH_SHORT).show()
             }
     }
 
