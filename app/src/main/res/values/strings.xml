@@ -25,5 +25,4 @@
     <string name="Invalid_email_format">Invalid email format</string>
     <string name="Please_enter_password">Please enter password</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

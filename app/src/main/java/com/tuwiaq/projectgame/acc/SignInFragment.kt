@@ -1,4 +1,4 @@
-package com.tuwiaq.projectgame
+package com.tuwiaq.projectgame.acc
 
 import android.app.ProgressDialog
 import android.os.Bundle
@@ -11,8 +11,13 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import com.tuwiaq.projectgame.R
+import com.tuwiaq.projectgame.model.MainViewModel
 
 class SignInFragment : Fragment() {
 
@@ -23,6 +28,7 @@ class SignInFragment : Fragment() {
     private lateinit var passwordEt: EditText
     private var email = ""
     private var password = ""
+    private val acc_vm: MainViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,19 +58,50 @@ class SignInFragment : Fragment() {
         return view
     }
 
-    private fun validateData() {
+    fun validateData() {
+
         email = emailET.text.toString().trim()
         password = passwordEt.text.toString().trim()
 
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailET.error = "Invalid email format"
-        } else if (TextUtils.isEmpty(password)) {
-            passwordEt.error = "Please enter password"
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(requireContext(), "Invalid email format", Toast.LENGTH_SHORT).show()
         } else if (password.length < 6) {
-            passwordEt.error = "Password must atleast 6 chracters long "
+            Toast.makeText(
+                requireContext(),
+                "Password must be atleast 6 chatcters long",
+                Toast.LENGTH_LONG
+            ).show()
         } else {
-            firebaseSignUp()
+            acc_vm.signUp(email, password)
         }
+
+
+        /*  if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+              emailET.error = "Invalid email format"
+          } else if (TextUtils.isEmpty(password)) {
+              passwordEt.error = "Please enter password"
+          } else if (password.length < 6) {
+              passwordEt.error = "Password must atleast 6 chracters long "
+          } else {
+              firebaseSignUp()
+          }*/
+    }
+
+    private var Email_ = "sweetlotusg@gmail.com"
+    private var pass_ = "123456"
+
+    val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
+    fun boo(email: String, password: String): Boolean {
+
+        if (EMAIL_REGEX.toRegex().matches(email)) {
+            return true
+
+            //  Toast.makeText(requireContext(),"Invalid email format",Toast.LENGTH_SHORT).show()
+        } else if (password.length < 6) {
+            return true
+            //  Toast.makeText(requireContext(),"Password must be atleast 6 chatcters long",Toast.LENGTH_LONG).show()
+        }
+        return false
     }
 
     private fun refreshCurrentFragment() {
@@ -74,7 +111,7 @@ class SignInFragment : Fragment() {
 
     }
 
-    private fun firebaseSignUp() {
+/*    private fun firebaseSignUp() {
         progressBar.show()
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -91,6 +128,6 @@ class SignInFragment : Fragment() {
                 progressBar.dismiss()
                 Toast.makeText(requireContext(), "Sign Up failed ", Toast.LENGTH_SHORT).show()
             }
-    }
+    }*/
 
 }

@@ -1,6 +1,7 @@
-package com.tuwiaq.projectgame
+package com.tuwiaq.projectgame.acc
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import com.google.firebase.auth.FirebaseAuth
+import com.tuwiaq.projectgame.R
+import com.tuwiaq.projectgame.model.MainViewModel
 
 class ForgetPasswordFragment : Fragment() {
     private lateinit var submit: Button
     private lateinit var emailE: EditText
     private lateinit var firebaseAuth: FirebaseAuth
+    private val acc_forget: MainViewModel by viewModels()
+
 
 
     override fun onCreateView(
@@ -29,10 +35,19 @@ class ForgetPasswordFragment : Fragment() {
         submit.setOnClickListener {
             val email = emailE.text.toString().trim() { it <= ' ' }
             if (email.isEmpty()) {
+                println("-----------------111")
+                println(email)
                 Toast.makeText(context, "Please enter email", Toast.LENGTH_SHORT).show()
 
             } else {
-                firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener {task ->
+
+                acc_forget.resetUserPassword(email,requireView())
+                println("-----------------111")
+                println(email)
+
+                Log.e("Tag","gggg")
+
+           /*     firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener {task ->
                     if (task.isSuccessful){
                         Toast.makeText(context,"Email sent successfully to reset your password",Toast.LENGTH_SHORT)
                             .show()
@@ -42,7 +57,7 @@ class ForgetPasswordFragment : Fragment() {
                             .show()
                     }
 
-                }
+                }*/
 
 
             }

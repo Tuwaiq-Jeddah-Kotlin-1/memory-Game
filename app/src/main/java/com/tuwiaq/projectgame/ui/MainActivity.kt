@@ -2,6 +2,7 @@ package com.tuwiaq.projectgame.ui
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 
 import androidx.work.*
@@ -16,11 +17,15 @@ class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // prevent the user from taking screen shot
+        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
+
         setContentView(R.layout.activity_main)
         var sher = this.getSharedPreferences("My_pref", MODE_PRIVATE)
         val lang = sher.getString("My_Lang", "")
         lang.let {
            setLocle(lang.toString())
+            // share view  to all act
         }
 
         myWorkerManger()

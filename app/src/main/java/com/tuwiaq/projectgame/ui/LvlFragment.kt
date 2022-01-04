@@ -78,7 +78,6 @@ class LvlFragment : Fragment() {
                 },cardNum,vm1 = vm
             )
 
-
         }
     }
 }

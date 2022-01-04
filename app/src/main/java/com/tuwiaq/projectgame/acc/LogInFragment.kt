@@ -1,24 +1,23 @@
-package com.tuwiaq.projectgame
+package com.tuwiaq.projectgame.acc
 
-import android.app.ActionBar
-import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.DialogInterface
-import android.os.Build
 import android.os.Bundle
+import android.text.InputType
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-import org.w3c.dom.Text
-import java.util.regex.Pattern
+import com.tuwiaq.projectgame.R
+import com.tuwiaq.projectgame.model.MainViewModel
 
 class LogInFragment : Fragment() {
     private lateinit var progressBar: ProgressDialog
@@ -30,6 +29,7 @@ class LogInFragment : Fragment() {
     private lateinit var pass: TextInputLayout
     private var email = ""
     private var password = ""
+    private val acc_logIn:MainViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,8 +61,8 @@ class LogInFragment : Fragment() {
 
         login.setOnClickListener {
              validDate()
+            Log.e("aaaa","this islogin")
 
-            findNavController().navigate(R.id.mainFragment)
         }
 
         return view
@@ -70,15 +70,26 @@ class LogInFragment : Fragment() {
 
 
     private fun validDate() {
-            email = ema.toString().trim()
-          password = pass.toString().trim()
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            email = ema.editText!!.text.toString().trim()
+          password = pass.editText!!.text.toString()
+        if (email.isEmpty()||password.isEmpty()){
+
+            Toast.makeText(requireContext(),"Invalid email or password format",Toast.LENGTH_SHORT).show()
+        }else{
+            //firebaseLogin()
+           // progressBar.show()
+            acc_logIn.signIn(email, password,requireView())
+        }
+
+  /*      if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             ema.error = getString(R.string.Invalid_email_format)
         }else if (TextUtils.isEmpty(password)){
             pass.error = getString(R.string.Please_enter_password)
         }else{
-            firebaseLogin()
-        }
+            acc_logIn.signIn(email, password,requireView())
+            Log.e("eee","this islogin")
+
+        }*/
 
      }
 
@@ -88,13 +99,17 @@ class LogInFragment : Fragment() {
         firebaseAuth.signInWithEmailAndPassword(email,password)
             .addOnSuccessListener {
                 progressBar.dismiss()
-                val firebaseUser = firebaseAuth.currentUser
-                val email = firebaseUser!!.email
+                val firebaseUser = acc_logIn.signIn(email,password,requireView())
+                val email = firebaseUser!!
+
+                Log.e("ttt","this islogin")
+
                 Toast.makeText(requireContext(),"Loggin as $email",Toast.LENGTH_SHORT).show()
                 //startActivity intent to profile
 
             }.addOnFailureListener {
                 progressBar.dismiss()
+                Log.e("hhh","this islogin")
                 Toast.makeText(requireContext(),"Log in failed ", Toast.LENGTH_SHORT).show()
             }
     }
@@ -105,13 +120,6 @@ class LogInFragment : Fragment() {
         findNavController().navigate(id!!)
 
     }
-
-/*    private fun checkUser() {
-        val firebaseUser = firebaseAuth.currentUser
-        if (firebaseUser != null)
-
-
-    }*/
 
 
 }

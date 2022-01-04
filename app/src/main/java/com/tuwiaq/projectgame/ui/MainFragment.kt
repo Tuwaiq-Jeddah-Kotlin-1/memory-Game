@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.tuwiaq.projectgame.R
@@ -59,11 +60,14 @@ class MainFragment : Fragment() {
     private lateinit var camera: Button
     private lateinit var btn_M: Button
     private lateinit var total: TextView
+    private lateinit var back_image: TextView
     private lateinit var emailPro: TextView
     private var photoFile: File? = null
     private var mCurrentPhotoPath: String? = null
     private lateinit var imageGalley: ImageView
     private lateinit var firebase: FirebaseAuth
+    private val acc_state:MainViewModel by viewModels()
+
     val rc_sgin_in = 0
 
 
@@ -112,10 +116,12 @@ class MainFragment : Fragment() {
         delete = view.findViewById(R.id.delete)
         emailPro = view.findViewById(R.id.logedInAS)
         LogOutBtn = view.findViewById(R.id.LogOutBtn)
+        back_image = view.findViewById(R.id.textBack)
         total.text = vm.getSaveSco()
 
         firebase = FirebaseAuth.getInstance()
         checkUser()
+
 
         /*  val action = (activity as AppCompatActivity).supportActionBar
           action?.title = resources.getString(R.string.app_name)*/
@@ -184,24 +190,29 @@ class MainFragment : Fragment() {
 
 
         customCard.setOnClickListener {
-            card2.background = resources.getDrawable(R.drawable.trick, null)
-            card2.visibility = View.VISIBLE
-            card2.onWindowFocusChanged(true)
-            closeBtn.setOnClickListener {
-                refreshCurrentFragment()
-            }
-            camera.setOnClickListener {
-                captureImage()
-            }
-            delete.setOnClickListener {
+            if (firebase.currentUser == null) {
+                Toast.makeText(requireContext(),"you must sign in first",Toast.LENGTH_SHORT).show()
+            }else {
 
-                deleteFile()
-                /*  val deletRequest= db.collection("ImageUrl")
+                card2.background = resources.getDrawable(R.drawable.trick, null)
+                card2.visibility = View.VISIBLE
+                card2.onWindowFocusChanged(true)
+                closeBtn.setOnClickListener {
+                    refreshCurrentFragment()
+                }
+                camera.setOnClickListener {
+                    captureImage()
+                }
+                delete.setOnClickListener {
+
+                    deleteFile()
+                    /*  val deletRequest= db.collection("ImageUrl")
                       .document(sharedPrefer.getString("UI","0").toString()).delete()
                   deletRequest*/
-            }
+                }
 
-            initUI()
+                initUI()
+            }
 
         }
 
@@ -209,14 +220,16 @@ class MainFragment : Fragment() {
     }
 
     private fun checkUser() {
-        val fierbaseUser = firebase.currentUser
+        val fierbaseUser = firebase.currentUser?.email
         if (fierbaseUser != null) {
-            val email = fierbaseUser.email
+            val email = fierbaseUser
             emailPro.text = email
             LogOutBtn.visibility = View.VISIBLE
             sin.visibility = View.GONE
+            back_image.visibility = View.VISIBLE
             LogOutBtn.setOnClickListener {
-                firebase.signOut()
+                acc_state.signOutFromAcc()
+              //  firebase.signOut()
                 checkUser()
                 refreshCurrentFragment()
             }
