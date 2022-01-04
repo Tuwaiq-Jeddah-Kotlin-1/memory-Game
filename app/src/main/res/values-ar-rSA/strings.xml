@@ -17,5 +17,12 @@
     <string name="Logging_in">Logging in...</string>
     <string name="Invalid_email_format">Invalid email format</string>
     <string name="Please_enter_password">Please enter password</string>
+    <string name="total_score">النتيجة الكاملة</string>
+    <string name="camera">كميرا</string>
+    <string name="gallery">الاستوديو</string>
+    <string name="level_1">مستوى الاول</string>
+    <string name="level_2">مستوى الثاني</string>
+    <string name="level_3">مستوى الثالث</string>
+    <string name="not_have_account_signup">"لا تملك حساب ؟ سجل "</string>
 
 </resources>

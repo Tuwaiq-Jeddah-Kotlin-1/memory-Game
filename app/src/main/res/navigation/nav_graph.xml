@@ -31,6 +31,9 @@
         <argument
             android:name="lvl"
             app:argType="string" />
+        <action
+            android:id="@+id/action_lvlOneFragment_self"
+            app:destination="@id/lvlOneFragment" />
     </fragment>
     <fragment
         android:id="@+id/stageFragment"
@@ -48,7 +51,7 @@
         tools:layout="@layout/fragment_achiv" />
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.tuwiaq.projectgame.SignInFragment"
+        android:name="com.tuwiaq.projectgame.acc.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
         <action
@@ -57,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/logInFragment"
-        android:name="com.tuwiaq.projectgame.LogInFragment"
+        android:name="com.tuwiaq.projectgame.acc.LogInFragment"
         android:label="fragment_log_in"
         tools:layout="@layout/fragment_log_in" >
         <action
@@ -66,10 +69,17 @@
         <action
             android:id="@+id/action_logInFragment_to_forgetPasswordFragment"
             app:destination="@id/forgetPasswordFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgetPasswordFragment"
-        android:name="com.tuwiaq.projectgame.ForgetPasswordFragment"
+        android:name="com.tuwiaq.projectgame.acc.ForgetPasswordFragment"
         android:label="fragment_forget_password"
-        tools:layout="@layout/fragment_forget_password" />
+        tools:layout="@layout/fragment_forget_password" >
+        <action
+            android:id="@+id/action_forgetPasswordFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

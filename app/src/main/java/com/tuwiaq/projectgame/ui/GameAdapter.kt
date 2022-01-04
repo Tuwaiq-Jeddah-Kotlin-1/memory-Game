@@ -21,6 +21,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -80,7 +81,6 @@ class GameAdapter(
         var image = itemView.findViewById<ImageButton>(R.id.image_btn)
         var title = itemView.findViewById<TextView>(R.id.title)
         var frontImage: ImageButton = itemView.findViewById(R.id.image_front)
-//        var home:Button = itemView.findViewById(R.id.homePage)
         private lateinit var front_animato: AnimatorSet
         private lateinit var back_animato: AnimatorSet
         private lateinit var firebase: FirebaseAuth
@@ -103,7 +103,7 @@ class GameAdapter(
                             frontImage.load(
                                 document.data.toString().replace("{ul=", "").replace("}", "")
                             )
-                            println("document.data.toString()")
+                            println("------------786876")
 
                             println(document.data.toString().replace("{ul=", "").replace("}", ""))
                         } else {
@@ -178,15 +178,18 @@ class GameAdapter(
                             score += 50
                             vm1.gameScore = score
                             // savedScore.text = score.toString()
-                             // vm1.saveScore(score)
+                            // vm1.saveScore(score)
 
                             Log.e("this is adapter score", score.toString())
                             cardClickListner.onClick(position, context)
                             correctCount++
                             if (correctCount == maxCorrect) {
                                 vm1.saveScore(score)
+
                                 dialogWin(it)
-                                Toast.makeText(context,"YOu WOn",Toast.LENGTH_SHORT).show()
+
+
+                                Toast.makeText(context, "YOu WOn", Toast.LENGTH_SHORT).show()
                             }
                         }
                         else -> {
@@ -207,14 +210,14 @@ class GameAdapter(
 
 
                             }
-//                            cardClickListner.onClick(position, context)
                         }
                     }
                 }
             }
 
-            if (position == (level - 1)) {
+            if (position == (level -1)|| position == (level -2) ) {
                 isClicked = true
+
                 GlobalScope.launch(Dispatchers.Main) {
                     for (index in 0..hardTime.lastIndex step (3)) {
                         GlobalScope.launch(Dispatchers.Main) {
@@ -240,10 +243,12 @@ class GameAdapter(
                     isClicked = false
                 }
             }
+
         }
 
 
-    }
+        }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycle_view, parent, false)
@@ -259,8 +264,11 @@ class GameAdapter(
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         var home = view.findViewById<Button>(R.id.homePage)
         home.setOnClickListener {
+         /*   when(cardNum){
+                NumberOfCard.EASY -> it.findNavController().navigate(LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.MEDIUM.toString()))
+            }*/
 
-          /*  val action =
+        /*    val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.MEDIUM.numberOfCardToString())
             findNavController(view).navigate(action)*/
 
