@@ -9,6 +9,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.icu.text.SimpleDateFormat
+import android.media.AudioManager
+import android.media.MediaParser
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -66,6 +69,7 @@ class MainFragment : Fragment() {
     private var mCurrentPhotoPath: String? = null
     private lateinit var imageGalley: ImageView
     private lateinit var firebase: FirebaseAuth
+   private lateinit var mediaPlayer:MediaPlayer
     private val acc_state:MainViewModel by viewModels()
 
     val rc_sgin_in = 0
@@ -95,6 +99,8 @@ class MainFragment : Fragment() {
 
     }
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -123,11 +129,15 @@ class MainFragment : Fragment() {
         checkUser()
 
 
+
+
         /*  val action = (activity as AppCompatActivity).supportActionBar
           action?.title = resources.getString(R.string.app_name)*/
 
 
         language_btn.setOnClickListener {
+            mediaPlayer =  MediaPlayer.create(context,R.raw.button)
+            mediaPlayer.start()
             showChangeLang()
         }
 
@@ -136,6 +146,8 @@ class MainFragment : Fragment() {
 
 
         btn_stage.setOnClickListener {
+            mediaPlayer =  MediaPlayer.create(context,R.raw.button)
+            mediaPlayer.start()
             card.background = resources.getDrawable(R.drawable.trick, null)
             card.visibility = View.VISIBLE
             closeBtn1.setOnClickListener {
@@ -145,6 +157,9 @@ class MainFragment : Fragment() {
         }
         btn_M = view.findViewById(R.id.medium_lvl)
         btn_M.setOnClickListener {
+            mediaPlayer =  MediaPlayer.create(context,R.raw.button)
+            mediaPlayer.start()
+
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.MEDIUM.numberOfCardToString())
             findNavController().navigate(action)
@@ -159,6 +174,9 @@ class MainFragment : Fragment() {
 
         btn_easy = view.findViewById(R.id.easy_lvl)
         btn_easy.setOnClickListener {
+            mediaPlayer =  MediaPlayer.create(context,R.raw.button)
+            mediaPlayer.start()
+
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.EASY.numberOfCardToString())
             findNavController().navigate(action)
@@ -175,6 +193,9 @@ class MainFragment : Fragment() {
         }
         btn_hard = view.findViewById(R.id.hard_lvl)
         btn_hard.setOnClickListener {
+            mediaPlayer =  MediaPlayer.create(context,R.raw.button)
+            mediaPlayer.start()
+
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.HARD.numberOfCardToString())
             findNavController().navigate(action)
@@ -190,6 +211,9 @@ class MainFragment : Fragment() {
 
 
         customCard.setOnClickListener {
+            mediaPlayer =  MediaPlayer.create(context,R.raw.button)
+            mediaPlayer.start()
+
             if (firebase.currentUser == null) {
                 Toast.makeText(requireContext(),"you must sign in first",Toast.LENGTH_SHORT).show()
             }else {
@@ -243,6 +267,7 @@ class MainFragment : Fragment() {
 
         }
     }
+
 
 
     private fun initUI() {
