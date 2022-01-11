@@ -150,6 +150,7 @@ class GameAdapter(
                     isFront[0] = true
                 }
             }
+
             //---------------------------------------
             hardTime.apply {
                 add(image)
