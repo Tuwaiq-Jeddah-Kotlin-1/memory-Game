@@ -91,17 +91,11 @@ class SignInFragment : Fragment() {
     private var pass_ = "123456"
 
     val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
+    val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
+
     fun boo(email: String, password: String): Boolean {
 
-        if (EMAIL_REGEX.toRegex().matches(email)) {
-            return true
-
-            //  Toast.makeText(requireContext(),"Invalid email format",Toast.LENGTH_SHORT).show()
-        } else if (password.length < 6) {
-            return true
-            //  Toast.makeText(requireContext(),"Password must be atleast 6 chatcters long",Toast.LENGTH_LONG).show()
-        }
-        return false
+        return EMAIL_REGEX.toRegex().matches(email) && (password.contains(Regex("[A-Z]"))&& password.contains(Regex("[0-9]")) )
     }
 
     private fun refreshCurrentFragment() {

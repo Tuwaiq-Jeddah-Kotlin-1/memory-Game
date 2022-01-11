@@ -2,6 +2,9 @@ package com.tuwiaq.projectgame.model.repo
 
 
 import android.app.Application
+import android.content.Context
+import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -10,18 +13,24 @@ import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.tuwiaq.projectgame.R
 import com.tuwiaq.projectgame.data.FirebaseUser
 import com.tuwiaq.projectgame.data.FirebaseUser.Companion.toFirebaseUser
+import com.tuwiaq.projectgame.ui.MainFragment
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import java.util.*
 
 object FirebaseService {
    // var loading:MutableLiveData<Boolean> = MutableLiveData()
     private val db by lazy { FirebaseFirestore.getInstance() }
     private val auth:FirebaseAuth = FirebaseAuth.getInstance()
     private var customToken :String? = null
+    private lateinit var firebase: FirebaseAuth
     private lateinit var application1:Application
 
 
@@ -92,6 +101,62 @@ object FirebaseService {
        }
     fun signOut(){
         auth.signOut()
+    }
+
+    suspend fun deleteImage(context:Context){
+        try {
+
+            (auth.currentUser?.uid?.let { it1 ->
+                db.collection("ImageUrl").document(
+                    it1
+                ).delete()
+            }?.addOnSuccessListener {
+               Toast.makeText(context, "Successfully deleted image", Toast.LENGTH_SHORT).show()
+
+            }?.addOnFailureListener {
+                Toast.makeText(context, "failed to delete the image", Toast.LENGTH_SHORT).show()
+
+            })
+        } catch (e: Exception) {
+            withContext(Dispatchers.Main) {
+               Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    suspend fun addImage(imageUri: Uri){
+        val formatter = SimpleDateFormat("yyy-MM-dd-HH-mm-ss")
+        val now = Date()
+        val fileName = formatter.format(now)
+        var storageRef = Firebase.storage.reference.child("images/$fileName.jpg")
+
+        try {
+            storageRef.putFile(imageUri)
+                .addOnSuccessListener { taskSnapshot ->
+                    taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                        //Add event to FireStore
+                        val docData = hashMapOf(
+                            "ul" to it.toString()
+                        )
+                        println("-----------------------------------")
+                        println(auth.currentUser?.uid)
+                        auth.currentUser?.uid?.let { it1 ->
+                            db.collection("ImageUrl").document(
+                                it1
+
+                            ).set(docData)
+                        }
+
+                    }.addOnFailureListener {
+                        Log.e(MainFragment.Tag, "Error upload the image ", it)
+
+                    }
+                }
+
+
+        } catch (e: Exception) {
+            Log.e(MainFragment.Tag, "Error add the event ", e)
+
+        }
     }
 
 

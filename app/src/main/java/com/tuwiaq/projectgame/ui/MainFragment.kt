@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.icu.text.SimpleDateFormat
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -36,7 +37,6 @@ import com.tuwiaq.projectgame.model.MainViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
@@ -66,7 +66,8 @@ class MainFragment : Fragment() {
     private var mCurrentPhotoPath: String? = null
     private lateinit var imageGalley: ImageView
     private lateinit var firebase: FirebaseAuth
-    private val acc_state:MainViewModel by viewModels()
+    private lateinit var mediaPlayer: MediaPlayer
+    private val acc_state: MainViewModel by viewModels()
 
     val rc_sgin_in = 0
 
@@ -94,6 +95,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -128,6 +130,8 @@ class MainFragment : Fragment() {
 
 
         language_btn.setOnClickListener {
+            mediaPlayer = MediaPlayer.create(context, R.raw.button)
+            mediaPlayer.start()
             showChangeLang()
         }
 
@@ -136,6 +140,8 @@ class MainFragment : Fragment() {
 
 
         btn_stage.setOnClickListener {
+            mediaPlayer = MediaPlayer.create(context, R.raw.button)
+            mediaPlayer.start()
             card.background = resources.getDrawable(R.drawable.trick, null)
             card.visibility = View.VISIBLE
             closeBtn1.setOnClickListener {
@@ -145,6 +151,9 @@ class MainFragment : Fragment() {
         }
         btn_M = view.findViewById(R.id.medium_lvl)
         btn_M.setOnClickListener {
+            mediaPlayer = MediaPlayer.create(context, R.raw.button)
+            mediaPlayer.start()
+
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.MEDIUM.numberOfCardToString())
             findNavController().navigate(action)
@@ -159,6 +168,9 @@ class MainFragment : Fragment() {
 
         btn_easy = view.findViewById(R.id.easy_lvl)
         btn_easy.setOnClickListener {
+            mediaPlayer = MediaPlayer.create(context, R.raw.button)
+            mediaPlayer.start()
+
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.EASY.numberOfCardToString())
             findNavController().navigate(action)
@@ -175,6 +187,9 @@ class MainFragment : Fragment() {
         }
         btn_hard = view.findViewById(R.id.hard_lvl)
         btn_hard.setOnClickListener {
+            mediaPlayer = MediaPlayer.create(context, R.raw.button)
+            mediaPlayer.start()
+
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.HARD.numberOfCardToString())
             findNavController().navigate(action)
@@ -190,9 +205,13 @@ class MainFragment : Fragment() {
 
 
         customCard.setOnClickListener {
+            mediaPlayer = MediaPlayer.create(context, R.raw.button)
+            mediaPlayer.start()
+
             if (firebase.currentUser == null) {
-                Toast.makeText(requireContext(),"you must sign in first",Toast.LENGTH_SHORT).show()
-            }else {
+                Toast.makeText(requireContext(), "you must sign in first", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
 
                 card2.background = resources.getDrawable(R.drawable.trick, null)
                 card2.visibility = View.VISIBLE
@@ -204,11 +223,8 @@ class MainFragment : Fragment() {
                     captureImage()
                 }
                 delete.setOnClickListener {
+                    acc_state.deleteImags(requireContext())
 
-                    deleteFile()
-                    /*  val deletRequest= db.collection("ImageUrl")
-                      .document(sharedPrefer.getString("UI","0").toString()).delete()
-                  deletRequest*/
                 }
 
                 initUI()
@@ -229,7 +245,7 @@ class MainFragment : Fragment() {
             back_image.visibility = View.VISIBLE
             LogOutBtn.setOnClickListener {
                 acc_state.signOutFromAcc()
-              //  firebase.signOut()
+                //  firebase.signOut()
                 checkUser()
                 refreshCurrentFragment()
             }
@@ -310,7 +326,7 @@ class MainFragment : Fragment() {
 
                         null
                     }
-                    photoFile?.also {
+                    photoFile?.also {1
                         val photoURI: Uri = FileProvider.getUriForFile(
                             requireActivity().applicationContext,
                             // "com.example.android.fileprovider"
@@ -328,7 +344,8 @@ class MainFragment : Fragment() {
     private val getActionTakePicture =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                addEvent(photoFile!!.toUri())
+                acc_state.addImage(photoFile!!.toUri())
+               // addEvent(photoFile!!.toUri())
                 imageGalley.setImageURI(photoFile!!.toUri())
             } else {
                 // "Request cancelled or something went wrong."
@@ -367,7 +384,6 @@ class MainFragment : Fragment() {
     }
 
     private fun pickImageFromGallery() {
-
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REUEST_FROM_GALLERY)
@@ -378,21 +394,22 @@ class MainFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REUEST_FROM_GALLERY) {
             imageGalley.setImageURI(data?.data)
-            addEvent(data?.data!!)
+            acc_state.addImage(data?.data!!)
+           // addEvent(data?.data!!)
 
         }
         when (requestCode) {
             REUEST_FROM_CAMERA ->
                 if (resultCode == Activity.RESULT_OK && requestCode == REUEST_FROM_CAMERA) {
                     imageGalley.setImageURI(data?.data)
-                    addEvent(data?.data!!)
+                    acc_state.addImage(data?.data!!)
+                   // addEvent(data?.data!!)
                 }
         }
     }
 
-  //  val imageRef = Firebase.storage.reference
 
-    private fun deleteFile() = CoroutineScope(Dispatchers.IO).launch {
+/*    private fun deleteFile() = CoroutineScope(Dispatchers.IO).launch {
         try {
 
 
@@ -412,16 +429,15 @@ class MainFragment : Fragment() {
                 Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
             }
         }
-    }
+    }*/
 
-    fun addEvent(imageUri: Uri) {
+ /*   fun addEvent(imageUri: Uri) {
         val formatter = SimpleDateFormat("yyy-MM-dd-HH-mm-ss")
         val now = Date()
         val fileName = formatter.format(now)
         var storageRef = Firebase.storage.reference.child("images/$fileName.jpg")
 
         try {
-            //Upload the image to FireStorage
             storageRef.putFile(imageUri)
                 .addOnSuccessListener { taskSnapshot ->
                     taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
@@ -438,10 +454,6 @@ class MainFragment : Fragment() {
                             ).set(docData)
                         }
 
-                        /*    db.collection("ImageUrl").document(
-                                sharedPrefer.getString("UI","0").toString()
-                            ).set(docData)*/
-
                     }.addOnFailureListener {
                         Log.e(Tag, "Error upload the image ", it)
 
@@ -454,7 +466,7 @@ class MainFragment : Fragment() {
 
         }
 
-    }
+    }*/
 
     fun showChangeLang() {
         val b = arrayOf("english", "عربي")

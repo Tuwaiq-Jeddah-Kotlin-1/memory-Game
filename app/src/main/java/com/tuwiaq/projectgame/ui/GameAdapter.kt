@@ -7,6 +7,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -52,6 +53,11 @@ class GameAdapter(
     val Tag = "GameAdapter"
     var answer = ""
     var score = 0
+    private lateinit var mediaPlayer: MediaPlayer
+    private lateinit var mediaPlayer1: MediaPlayer
+    private lateinit var mediaPlayer2: MediaPlayer
+
+
 
 
     init {
@@ -144,6 +150,7 @@ class GameAdapter(
                     isFront[0] = true
                 }
             }
+
             //---------------------------------------
             hardTime.apply {
                 add(image)
@@ -175,6 +182,8 @@ class GameAdapter(
                             answerList.add(answer)
                             answer = ""
                             imageAnimation(image, frontImage, isFrontList)
+                            mediaPlayer =  MediaPlayer.create(context,R.raw.wincard)
+                            mediaPlayer.start()
                             score += 50
                             vm1.gameScore = score
                             // savedScore.text = score.toString()
@@ -185,6 +194,8 @@ class GameAdapter(
                             correctCount++
                             if (correctCount == maxCorrect) {
                                 vm1.saveScore(score)
+                                 mediaPlayer1 = MediaPlayer.create(context,R.raw.win)
+                                mediaPlayer1.start()
 
                                 dialogWin(it)
 
@@ -195,6 +206,9 @@ class GameAdapter(
                         else -> {
                             isClicked = !isClicked
                             answer = ""
+                            mediaPlayer2 = MediaPlayer.create(context,R.raw.failedcard)
+                            mediaPlayer2.start()
+
                             imageAnimation(image, frontImage, isFrontList)
                             GlobalScope.launch(Dispatchers.Main) {
                                 delay(1000)
@@ -290,7 +304,21 @@ class GameAdapter(
 
     override fun getItemCount(): Int = level
 
+    private fun playSong(){
+        mediaPlayer =  MediaPlayer.create(context,R.raw.wincard)
+        try {
+            mediaPlayer.start()
+            mediaPlayer.setVolume(70.4F, 70.8F)
+            println(mediaPlayer)
+            println("---------------2222")
+            Toast.makeText(context,"this is aaa",Toast.LENGTH_SHORT).show()
 
+        }catch (e:Exception){
+            Toast.makeText(context,"this is e",Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
 }
 
 

@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // prevent the user from taking screen shot
-        window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
+       window.setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE)
 
         setContentView(R.layout.activity_main)
         var sher = this.getSharedPreferences("My_pref", MODE_PRIVATE)
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity(){
             .setRequiresBatteryNotLow(true)
             .build()
         val myRequest = PeriodicWorkRequest.Builder(
-            MyWorker::class.java,15, TimeUnit.MINUTES
+            MyWorker::class.java,24, TimeUnit.HOURS
         ).setConstraints(constraints)
             .build()
         WorkManager.getInstance(this)
