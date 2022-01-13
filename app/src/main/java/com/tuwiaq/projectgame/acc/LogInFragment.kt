@@ -2,10 +2,7 @@ package com.tuwiaq.projectgame.acc
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.text.InputType
-import android.text.TextUtils
 import android.util.Log
-import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +31,6 @@ class LogInFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_log_in, container, false)
         login = view.findViewById(R.id.loginBtn)
         noAcc = view.findViewById(R.id.noAccTv)
@@ -76,43 +72,11 @@ class LogInFragment : Fragment() {
 
             Toast.makeText(requireContext(),"Invalid email or password format",Toast.LENGTH_SHORT).show()
         }else{
-            //firebaseLogin()
-           // progressBar.show()
             acc_logIn.signIn(email, password,requireView())
         }
 
-  /*      if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            ema.error = getString(R.string.Invalid_email_format)
-        }else if (TextUtils.isEmpty(password)){
-            pass.error = getString(R.string.Please_enter_password)
-        }else{
-            acc_logIn.signIn(email, password,requireView())
-            Log.e("eee","this islogin")
-
-        }*/
-
      }
 
-
-    private fun firebaseLogin() {
-        progressBar.show()
-        firebaseAuth.signInWithEmailAndPassword(email,password)
-            .addOnSuccessListener {
-                progressBar.dismiss()
-                val firebaseUser = acc_logIn.signIn(email,password,requireView())
-                val email = firebaseUser!!
-
-                Log.e("ttt","this islogin")
-
-                Toast.makeText(requireContext(),"Loggin as $email",Toast.LENGTH_SHORT).show()
-                //startActivity intent to profile
-
-            }.addOnFailureListener {
-                progressBar.dismiss()
-                Log.e("hhh","this islogin")
-                Toast.makeText(requireContext(),"Log in failed ", Toast.LENGTH_SHORT).show()
-            }
-    }
 
     private fun refreshCurrentFragment() {
         val id = findNavController().currentDestination?.id

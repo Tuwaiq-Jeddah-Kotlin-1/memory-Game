@@ -21,8 +21,8 @@ class SignInFragmentTest {
     }
       @Test
     fun checkEmail(){
-        val result = signInFragment.boo("sweetlotus@gmail.com","123456")
-          val result2= signInFragment.boo("sweetlotus@gmail.com","123456A")
+        val result = signInFragment.boo("sff@gmail.com","123456")
+          val result2= signInFragment.boo("sff@gmail.com","123456A")
           assert(result2)
 
   /*

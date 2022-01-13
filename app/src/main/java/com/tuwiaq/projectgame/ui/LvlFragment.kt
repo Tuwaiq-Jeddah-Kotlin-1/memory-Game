@@ -2,37 +2,30 @@ package com.tuwiaq.projectgame.ui
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tuwiaq.projectgame.R
 import com.tuwiaq.projectgame.model.MainViewModel
-import com.tuwiaq.projectgame.ui.GameAdapter.Companion.STOCK_SHARED_KEY
 
 
 class LvlFragment : Fragment() {
 
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var image: ImageView
     private lateinit var savedScore: TextView
 
     private val vm by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    companion object {
-        private const val Tag = "MainActivity"
-    }
     private lateinit var cardNum: NumberOfCard
 
     override fun onCreateView(
@@ -48,9 +41,9 @@ class LvlFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val lvl: LvlFragmentArgs by navArgs()
-        var level = lvl.lvl.toNumberOfCard()
+        val level = lvl.lvl.toNumberOfCard()
         cardNum = level
-        var levelHeight = level.getHeight()
+        val levelHeight = level.getHeight()
 
         recyclerView = view.findViewById(R.id.rvRecycleView)
 
@@ -71,9 +64,25 @@ class LvlFragment : Fragment() {
                 it.photos.photo,
                 object : GameAdapter.CardClickListner {
                     override fun onClick(position: Int, applicationContext: Context) {
-                      //  image = view.findViewById<ImageButton>(R.id.image_btn)
-                        Log.e("lvl fragment", savedScore.toString())
                         savedScore.text = vm.gameScore.toString()
+                    }
+
+                    override fun onWin(gg: Boolean) {
+                     if (gg){
+                       if (levelHeight == 8){
+                           val action = LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.MEDIUM.numberOfCardToString())
+                           findNavController().navigate(action)
+
+                       }else if(levelHeight == 16){
+                           val action = LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.HARD.numberOfCardToString())
+                           findNavController().navigate(action)
+
+                       }else{
+
+                         findNavController().navigate(R.id.action_lvlOneFragment_to_mainFragment)
+
+                       }
+                     }
                     }
                 },cardNum,vm1 = vm
             )

@@ -26,10 +26,8 @@ import kotlinx.coroutines.withContext
 import java.util.*
 
 object FirebaseService {
-   // var loading:MutableLiveData<Boolean> = MutableLiveData()
     private val db by lazy { FirebaseFirestore.getInstance() }
     private val auth:FirebaseAuth = FirebaseAuth.getInstance()
-    private var customToken :String? = null
     private lateinit var firebase: FirebaseAuth
     private lateinit var application1:Application
 
@@ -85,14 +83,14 @@ object FirebaseService {
 
     suspend fun forgetPassword(n_password: String,view: View){
         auth.sendPasswordResetEmail(n_password)
-            ?.addOnCompleteListener {
-               if (it.isSuccessful){
-                   Navigation.findNavController(view).navigate(R.id.action_forgetPasswordFragment_to_mainFragment)
+            .addOnCompleteListener {
+                if (it.isSuccessful){
+                    Navigation.findNavController(view).navigate(R.id.action_forgetPasswordFragment_to_mainFragment)
 
-               }else{
-                   Log.i("forget password failed",it.exception!!.message,it.exception!!)
+                }else{
+                    Log.i("forget password failed",it.exception!!.message,it.exception!!)
 
-               }
+                }
             }
     }
 
@@ -127,7 +125,7 @@ object FirebaseService {
         val formatter = SimpleDateFormat("yyy-MM-dd-HH-mm-ss")
         val now = Date()
         val fileName = formatter.format(now)
-        var storageRef = Firebase.storage.reference.child("images/$fileName.jpg")
+        val storageRef = Firebase.storage.reference.child("images/$fileName.jpg")
 
         try {
             storageRef.putFile(imageUri)

@@ -2,8 +2,6 @@ package com.tuwiaq.projectgame.acc
 
 import android.app.ProgressDialog
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,8 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.tuwiaq.projectgame.R
@@ -75,28 +71,33 @@ class SignInFragment : Fragment() {
             acc_vm.signUp(email, password)
         }
 
-
-        /*  if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-              emailET.error = "Invalid email format"
-          } else if (TextUtils.isEmpty(password)) {
-              passwordEt.error = "Please enter password"
-          } else if (password.length < 6) {
-              passwordEt.error = "Password must atleast 6 chracters long "
-          } else {
-              firebaseSignUp()
-          }*/
     }
 
-    private var Email_ = "sweetlotusg@gmail.com"
-    private var pass_ = "123456"
 
-    val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})"
-    val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
+    val EMAIL_REGEX = "^[A-Za-z](.*)([@]{1})(.+)(\\.)(.{1,})"
+   // val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
 
     fun boo(email: String, password: String): Boolean {
 
         return EMAIL_REGEX.toRegex().matches(email) && (password.contains(Regex("[A-Z]"))&& password.contains(Regex("[0-9]")) )
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private fun refreshCurrentFragment() {
         val id = findNavController().currentDestination?.id
