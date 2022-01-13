@@ -8,19 +8,17 @@ import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
-import android.icu.text.SimpleDateFormat
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
+import android.os.*
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.Constraints
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
@@ -30,14 +28,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.tuwiaq.projectgame.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.tuwiaq.projectgame.model.MainViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -45,9 +36,7 @@ import java.util.*
 
 class MainFragment : Fragment() {
     private lateinit var btn_stage: Button
-    private lateinit var sign_in: Button
     private lateinit var uploadImage: Button
-    private lateinit var saveImage: Button
     private lateinit var customCard: Button
     private lateinit var language_btn: Button
     private lateinit var closeBtn: ImageButton
@@ -69,7 +58,6 @@ class MainFragment : Fragment() {
     private lateinit var mediaPlayer: MediaPlayer
     private val acc_state: MainViewModel by viewModels()
 
-    val rc_sgin_in = 0
 
 
     companion object {
@@ -80,7 +68,6 @@ class MainFragment : Fragment() {
         val Tag = "MainFragment"
     }
 
-    private val db by lazy { FirebaseFirestore.getInstance() }
     private val vm by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
 
@@ -125,9 +112,6 @@ class MainFragment : Fragment() {
         checkUser()
 
 
-        /*  val action = (activity as AppCompatActivity).supportActionBar
-          action?.title = resources.getString(R.string.app_name)*/
-
 
         language_btn.setOnClickListener {
             mediaPlayer = MediaPlayer.create(context, R.raw.button)
@@ -142,7 +126,11 @@ class MainFragment : Fragment() {
         btn_stage.setOnClickListener {
             mediaPlayer = MediaPlayer.create(context, R.raw.button)
             mediaPlayer.start()
-            card.background = resources.getDrawable(R.drawable.trick, null)
+          //  card.background = resources.getDrawable(R.drawable.trick, null)
+            sin.visibility = View.INVISIBLE
+            customCard.visibility = View.INVISIBLE
+            btn_stage.visibility = View.INVISIBLE
+            LogOutBtn.visibility = View.INVISIBLE
             card.visibility = View.VISIBLE
             closeBtn1.setOnClickListener {
                 refreshCurrentFragment()
@@ -158,12 +146,9 @@ class MainFragment : Fragment() {
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.MEDIUM.numberOfCardToString())
             findNavController().navigate(action)
             showLoading()
-            android.os.Handler().postDelayed(
-                {
-                    hideLoading()
-
-                }, 4000
-            )
+            Handler(Looper.getMainLooper()).postDelayed({
+                hideLoading()
+            }, 4000)
         }
 
         btn_easy = view.findViewById(R.id.easy_lvl)
@@ -176,13 +161,9 @@ class MainFragment : Fragment() {
             findNavController().navigate(action)
 
             showLoading()
-            android.os.Handler().postDelayed(
-                {
-                    hideLoading()
-
-                }, 4000
-            )
-
+            Handler(Looper.getMainLooper()).postDelayed({
+                hideLoading()
+            }, 4000)
 
         }
         btn_hard = view.findViewById(R.id.hard_lvl)
@@ -194,12 +175,16 @@ class MainFragment : Fragment() {
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.HARD.numberOfCardToString())
             findNavController().navigate(action)
             showLoading()
-            android.os.Handler().postDelayed(
-                {
-                    hideLoading()
+            Handler(Looper.getMainLooper()).postDelayed({
+                hideLoading()
+            }, 4000)
 
-                }, 4000
-            )
+            /*  android.os.Handler().postDelayed(
+                  {
+                      hideLoading()
+
+                  }, 4000
+              )*/
         }
 
 
@@ -213,7 +198,11 @@ class MainFragment : Fragment() {
                     .show()
             } else {
 
-                card2.background = resources.getDrawable(R.drawable.trick, null)
+               // card2.background = resources.getDrawable(R.drawable.trick, null)
+                   sin.visibility = View.INVISIBLE
+                customCard.visibility = View.INVISIBLE
+                btn_stage.visibility = View.INVISIBLE
+                LogOutBtn.visibility = View.INVISIBLE
                 card2.visibility = View.VISIBLE
                 card2.onWindowFocusChanged(true)
                 closeBtn.setOnClickListener {
@@ -316,20 +305,16 @@ class MainFragment : Fragment() {
             )
         } else {
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-                // Ensure that there's a camera activity to handle the intent
                 takePictureIntent?.also {
-                    // Create the File where the photo should go
                     photoFile = try {
                         createImageFile()
                     } catch (ex: IOException) {
-                        // Error occurred while creating the File
 
                         null
                     }
-                    photoFile?.also {1
+                    photoFile?.also {
                         val photoURI: Uri = FileProvider.getUriForFile(
                             requireActivity().applicationContext,
-                            // "com.example.android.fileprovider"
                             "com.tuwiaq.projectgame.contentprovider",
                             it
                         )
@@ -345,19 +330,14 @@ class MainFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 acc_state.addImage(photoFile!!.toUri())
-               // addEvent(photoFile!!.toUri())
                 imageGalley.setImageURI(photoFile!!.toUri())
             } else {
-                // "Request cancelled or something went wrong."
             }
 
         }
 
     @Throws(IOException::class)
     private fun createImageFile(): File {
-        // Create an image file name
-        // awl shy uif
-        // b3ha
         val timeStamp = java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = "JPEG_" + timeStamp + "_"
         val storageDir = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -366,7 +346,6 @@ class MainFragment : Fragment() {
             ".jpg", /* suffix */
             storageDir      /* directory */
         )
-        // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.absolutePath
         return image
     }
@@ -477,11 +456,11 @@ class MainFragment : Fragment() {
         }
         hBuild.setSingleChoiceItems(b, -1) { dialog, which ->
             if (which == 0) {
-                setLocle("ar")
+                setLocle("en")
                 refreshCurrentFragment()
 
             } else {
-                setLocle("en")
+                setLocle("ar")
                 refreshCurrentFragment()
             }
             dialog.dismiss()
@@ -505,12 +484,6 @@ class MainFragment : Fragment() {
         editor.putString("My_Lang", s)
         editor.apply()
 
-    }
-
-    private fun loadLoc() {
-        var sher = requireContext().getSharedPreferences("My_pref", MODE_PRIVATE)
-        val lang = sher.getString("My_Lang", "")
-        setLocle(lang.toString())
     }
 
     private fun refreshCurrentFragment() {

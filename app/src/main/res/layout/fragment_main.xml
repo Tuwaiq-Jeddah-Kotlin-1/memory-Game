@@ -9,220 +9,19 @@
 
 
     <Button
-        android:id="@+id/language"
-        android:layout_width="130dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="260dp"
-        android:layout_marginBottom="570dp"
-        android:background="@drawable/btn_shape"
-        android:text="@string/en"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="130dp"
-        android:layout_height="30dp"
-        android:layout_marginRight="260dp"
-        android:layout_marginBottom="480dp"
-        android:background="@drawable/btn_shape"
-        android:fontFamily="@font/ubuntu_mono_italic"
-        android:gravity="center"
-        android:text="@string/total_score"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/total_sco"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="280dp"
-        android:layout_marginBottom="390dp"
-        android:text="0"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Button
         android:id="@+id/stage"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="130dp"
-        android:background="@drawable/btn_shape"
-        android:fontFamily="@font/ubuntu_mono_italic"
+        android:layout_height="60dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/nny"
+        android:fontFamily="@font/bangers"
         android:text="@string/stage"
-        android:textAllCaps="false"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/achivFragment"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_shape"
-        android:fontFamily="@font/ubuntu_mono_italic"
-        android:text="@string/achievement"
-        android:textAllCaps="false"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Button
-        android:id="@+id/custom"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/btn_shape"
-        android:fontFamily="@font/ubuntu_mono_italic"
-        android:text="@string/card_customize"
-        android:textAllCaps="false"
+        android:textColor="#50351A"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/sin"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:background="@drawable/btn_shape"
-        android:fontFamily="@font/ubuntu_mono_italic"
-        android:text="@string/sign_in"
-        android:textAllCaps="false"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textBack"
-        android:layout_width="290dp"
-        android:layout_height="35dp"
-        android:background="#D0F9D3B0"
-       android:visibility="invisible"
-        android:layout_marginBottom="670dp"
-        android:layout_marginRight="150dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/logedInAS"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="670dp"
-        android:layout_marginLeft="-150dp"
-        android:fontFamily="@font/ubuntu_mono_italic"
-        android:text=""
-        android:textStyle="bold"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/LogOutBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:background="@drawable/btn_shape"
-        android:text="Log out"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/stage_mode"
-        android:layout_width="300dp"
-        android:layout_height="380dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="179dp"
-        android:layout_marginEnd="61dp"
-        android:visibility="invisible"
-        app:cardBackgroundColor="#D7FFFFFF"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <Button
-            android:id="@+id/easy_lvl"
-            android:layout_width="250dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/btn_shape"
-            android:fontFamily="@font/ubuntu_mono_italic"
-            android:text="@string/level_1"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/medium_lvl"
-            android:layout_width="250dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:background="@drawable/btn_shape"
-            android:fontFamily="@font/ubuntu_mono_italic"
-            android:text="@string/level_2"
-            android:textAllCaps="false"
-
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/hard_lvl"
-            android:layout_width="250dp"
-            android:layout_height="70dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="100dp"
-            android:background="@drawable/btn_shape"
-            android:fontFamily="@font/ubuntu_mono_italic"
-            android:text="@string/level_3"
-            android:textAllCaps="false"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/X1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="240dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ic_baseline_close_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/customCard"
@@ -232,23 +31,38 @@
         android:layout_marginTop="180dp"
         android:layout_marginEnd="61dp"
         android:visibility="invisible"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:id="@+id/constraintCamera"
+            android:layout_width="340dp"
+            android:layout_height="350dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/cardviewforbutton"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/X"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="230dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_baseline_close_24"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="203dp"
+                android:background="@drawable/xbutton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -270,13 +84,14 @@
             <Button
                 android:id="@+id/upload"
                 android:layout_width="140dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="120dp"
-                android:background="@drawable/btn_shape"
-                android:fontFamily="@font/ubuntu_mono_italic"
+                android:background="@drawable/nny"
+                android:fontFamily="@font/bangers"
                 android:text="@string/gallery"
                 android:textAllCaps="false"
                 android:textSize="20sp"
+                android:textColor="#50351A"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -287,10 +102,11 @@
             <Button
                 android:id="@+id/camera"
                 android:layout_width="140dp"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginTop="250dp"
-                android:background="@drawable/btn_shape"
-                android:fontFamily="@font/ubuntu_mono_italic"
+                android:background="@drawable/nny"
+                android:fontFamily="@font/bangers"
+                android:textColor="#50351A"
                 android:text="@string/camera"
                 android:textAllCaps="false"
                 android:textSize="20sp"
@@ -306,7 +122,7 @@
                 android:id="@+id/delete"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="200dp"
+                android:layout_marginStart="200dp"
                 android:layout_marginTop="100dp"
                 android:background="@drawable/ic_baseline_delete_outline_24"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -315,6 +131,203 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/language"
+        android:layout_width="130dp"
+        android:layout_height="39dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginBottom="570dp"
+        android:background="@drawable/nny"
+        android:textColor="#50351A"
+        android:text="@string/en"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="130dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginBottom="480dp"
+        android:background="@drawable/nny"
+        android:textColor="#50351A"
+        android:fontFamily="@font/bangers"
+        android:gravity="center"
+        android:text="@string/total_score"
+        android:textAllCaps="false"
+        android:textSize="21sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/total_sco"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="280dp"
+        android:layout_marginBottom="390dp"
+        android:text="0"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/custom"
+        android:layout_width="200dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="120dp"
+        android:background="@drawable/nny"
+        android:fontFamily="@font/bangers"
+        android:text="@string/card_customize"
+        android:textAllCaps="false"
+        android:textColor="#50351A"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/sin"
+        android:layout_width="200dp"
+        android:layout_height="66dp"
+        android:layout_marginTop="240dp"
+        android:background="@drawable/nny"
+        android:fontFamily="@font/bangers"
+        android:text="@string/sign_in"
+        android:textColor="#50351A"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textBack"
+        android:layout_width="290dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginBottom="670dp"
+        android:background="@drawable/nny"
+        android:textColor="#50351A"
+        android:fontFamily="@font/bangers"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/logedInAS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="-150dp"
+        android:layout_marginBottom="670dp"
+        android:fontFamily="@font/bangers"
+        android:textColor="#50351A"
+        android:text=""
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/LogOutBtn"
+        android:layout_width="100dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="240dp"
+        android:background="@drawable/nny"
+        android:fontFamily="@font/bangers"
+        android:textColor="#50351A"
+        android:text="Log out"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/stage_mode"
+        android:layout_width="300dp"
+        android:layout_height="380dp"
+        android:visibility="invisible"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardElevation="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="315dp"
+            android:layout_height="370dp"
+            android:background="@drawable/cardviewforbutton" />
+
+        <Button
+            android:id="@+id/easy_lvl"
+            android:layout_width="210dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center|top"
+            android:layout_marginTop="60dp"
+            android:textColor="#50351A"
+            android:background="@drawable/nny"
+            android:fontFamily="@font/bangers"
+            android:text="@string/level_1"
+            android:textAllCaps="false"
+            android:textSize="26sp" />
+
+        <Button
+            android:id="@+id/medium_lvl"
+            android:layout_width="210dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:textColor="#50351A"
+            android:background="@drawable/nny"
+            android:fontFamily="@font/bangers"
+            android:text="@string/level_2"
+            android:textAllCaps="false"
+            android:textSize="26sp" />
+
+        <Button
+            android:id="@+id/hard_lvl"
+            android:layout_width="210dp"
+            android:layout_height="70dp"
+            android:textColor="#50351A"
+            android:layout_gravity="center"
+            android:layout_marginTop="93dp"
+            android:background="@drawable/nny"
+            android:fontFamily="@font/bangers"
+            android:text="@string/level_3"
+            android:textAllCaps="false"
+            android:textSize="26sp" />
+
+        <ImageButton
+            android:id="@+id/X1"
+            android:layout_width="70dp"
+            android:layout_height="78dp"
+            android:layout_marginStart="236dp"
+            android:background="@drawable/xbutton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.cardview.widget.CardView>
 

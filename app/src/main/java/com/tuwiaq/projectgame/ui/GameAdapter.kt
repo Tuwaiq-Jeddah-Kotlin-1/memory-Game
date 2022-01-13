@@ -4,26 +4,16 @@ import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.media.MediaPlayer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import android.widget.Toast.LENGTH_SHORT
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.cardview.widget.CardView
-import androidx.navigation.Navigation
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.firebase.auth.FirebaseAuth
@@ -33,14 +23,13 @@ import com.tuwiaq.projectgame.data.FlickerPhoto
 import com.tuwiaq.projectgame.model.MainViewModel
 
 import kotlinx.coroutines.*
-import java.util.logging.Handler
 
 class GameAdapter(
     var context: Context,
     var level: Int,
     val cards: List<FlickerPhoto>,
     private var cardClickListner: CardClickListner,
-    val cardNum: NumberOfCard,var vm1:MainViewModel
+    val cardNum: NumberOfCard,val vm1:MainViewModel
 ) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
 
@@ -50,43 +39,39 @@ class GameAdapter(
     var answerList = mutableListOf<String>()
     var any = mutableListOf<Any>()
     var hardTime = mutableListOf<Any>()
-    val Tag = "GameAdapter"
     var answer = ""
     var score = 0
     private lateinit var mediaPlayer: MediaPlayer
-    private lateinit var mediaPlayer1: MediaPlayer
+    private lateinit var  mediaPlayer1: MediaPlayer
     private lateinit var mediaPlayer2: MediaPlayer
 
 
 
 
     init {
-        var ar0 = cards.shuffled()
-        var ar01 = ar0.shuffled()
+        val ar0 = cards.shuffled()
+        val ar01 = ar0.shuffled()
         ar000.addAll(ar0)
         ar000.addAll(ar01)
-       // vm1.gameScore = 0
 
-
-        //   score = vm1.getSaveSco().toInt()
     }
 
     companion object {
         var isClicked = false
         const val STOCK_SHARED_KEY = "lastStockValue"
-      //  var score = 0
     }
 
     interface CardClickListner {
         fun onClick(position: Int, applicationContext: Context)
+        fun onWin(gg:Boolean)
     }
 
     inner class ViewHolder(itemView: View, private var applicationContext: Context) :
         RecyclerView.ViewHolder(itemView) {
 
-        var image = itemView.findViewById<ImageButton>(R.id.image_btn)
-        var title = itemView.findViewById<TextView>(R.id.title)
-        var frontImage: ImageButton = itemView.findViewById(R.id.image_front)
+        val image = itemView.findViewById<ImageButton>(R.id.image_btn)
+        val title = itemView.findViewById<TextView>(R.id.title)
+        val frontImage: ImageButton = itemView.findViewById(R.id.image_front)
         private lateinit var front_animato: AnimatorSet
         private lateinit var back_animato: AnimatorSet
         private lateinit var firebase: FirebaseAuth
@@ -109,12 +94,10 @@ class GameAdapter(
                             frontImage.load(
                                 document.data.toString().replace("{ul=", "").replace("}", "")
                             )
-                            println("------------786876")
 
                             println(document.data.toString().replace("{ul=", "").replace("}", ""))
                         } else {
                             frontImage.setBackgroundResource(R.drawable.backg)
-                            Log.d(Tag, "No such document")
                         }
                     }
             }
@@ -186,21 +169,18 @@ class GameAdapter(
                             mediaPlayer.start()
                             score += 50
                             vm1.gameScore = score
-                            // savedScore.text = score.toString()
-                            // vm1.saveScore(score)
 
-                            Log.e("this is adapter score", score.toString())
                             cardClickListner.onClick(position, context)
                             correctCount++
                             if (correctCount == maxCorrect) {
                                 vm1.saveScore(score)
                                  mediaPlayer1 = MediaPlayer.create(context,R.raw.win)
                                 mediaPlayer1.start()
-
                                 dialogWin(it)
 
 
-                                Toast.makeText(context, "YOu WOn", Toast.LENGTH_SHORT).show()
+
+                                Toast.makeText(context, "YOU WON", Toast.LENGTH_SHORT).show()
                             }
                         }
                         else -> {
@@ -270,23 +250,18 @@ class GameAdapter(
         return ViewHolder(view, context)
     }
     fun dialogWin(view:View){
-        val view = View.inflate(context,R.layout.dialog_win,null)
+        val views = View.inflate(context,R.layout.dialog_win,null)
         val builder = AlertDialog.Builder(context)
-        builder.setView(view)
+        builder.setView(views)
         val dialog = builder.create()
         dialog.show()
+
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-        var home = view.findViewById<Button>(R.id.homePage)
+        val home = views.findViewById<Button>(R.id.homePage)
         home.setOnClickListener {
-         /*   when(cardNum){
-                NumberOfCard.EASY -> it.findNavController().navigate(LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.MEDIUM.toString()))
-            }*/
 
-        /*    val action =
-                MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.MEDIUM.numberOfCardToString())
-            findNavController(view).navigate(action)*/
-
-            view.getContext().startActivity(Intent(view.getContext(), MainActivity::class.java))
+            cardClickListner.onWin(true)
+            dialog.dismiss()
 
         }
 
@@ -294,7 +269,7 @@ class GameAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        var photo = ar000[position]
+        val photo = ar000[position]
         holder.image.load(photo.url_s)
         holder.title.text = photo.title
         holder.title.textSize = 0.0f
@@ -304,21 +279,6 @@ class GameAdapter(
 
     override fun getItemCount(): Int = level
 
-    private fun playSong(){
-        mediaPlayer =  MediaPlayer.create(context,R.raw.wincard)
-        try {
-            mediaPlayer.start()
-            mediaPlayer.setVolume(70.4F, 70.8F)
-            println(mediaPlayer)
-            println("---------------2222")
-            Toast.makeText(context,"this is aaa",Toast.LENGTH_SHORT).show()
-
-        }catch (e:Exception){
-            Toast.makeText(context,"this is e",Toast.LENGTH_SHORT).show()
-        }
-
-
-    }
 }
 
 

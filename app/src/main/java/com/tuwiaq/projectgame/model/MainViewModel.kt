@@ -6,7 +6,6 @@ import android.net.Uri
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
-import com.tuwiaq.projectgame.R
 import com.tuwiaq.projectgame.data.FirebaseUser
 import com.tuwiaq.projectgame.data.FlickerData
 import com.tuwiaq.projectgame.model.repo.FirebaseService
@@ -65,7 +64,7 @@ class MainViewModel(context: Application) : AndroidViewModel(context) {
     val repo = FlickrRepo()
 
     fun fetchIntrestingList(i: Int): LiveData<FlickerData> {
-        var photos = MutableLiveData<FlickerData>()
+        val photos = MutableLiveData<FlickerData>()
         viewModelScope.launch {
             try {
                 photos.postValue(repo.fetchIntrestingList(i))

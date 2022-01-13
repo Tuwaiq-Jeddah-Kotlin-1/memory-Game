@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_lvlOneFragment_self"
             app:destination="@id/lvlOneFragment" />
+        <action
+            android:id="@+id/action_lvlOneFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/stageFragment"

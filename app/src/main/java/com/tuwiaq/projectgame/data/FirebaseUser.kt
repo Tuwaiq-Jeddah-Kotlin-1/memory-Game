@@ -12,8 +12,8 @@ data class FirebaseUser(
         fun DocumentSnapshot.toFirebaseUser():FirebaseUser?{
             return try {
                 val uid = getString("uid")!!
-                var email = getString("email")!!
-                var password = getString("password")!!
+                val email = getString("email")!!
+                val password = getString("password")!!
                 FirebaseUser(uid, email, password)
             }catch (e:Exception){
                 null
