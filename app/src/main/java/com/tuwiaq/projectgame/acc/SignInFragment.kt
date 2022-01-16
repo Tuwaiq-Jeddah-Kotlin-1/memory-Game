@@ -83,22 +83,6 @@ class SignInFragment : Fragment() {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private fun refreshCurrentFragment() {
         val id = findNavController().currentDestination?.id
         findNavController().navigateUp()
@@ -106,23 +90,5 @@ class SignInFragment : Fragment() {
 
     }
 
-/*    private fun firebaseSignUp() {
-        progressBar.show()
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                progressBar.dismiss()
-                val firebase = firebaseAuth.currentUser
-                val email = firebase!!.email
-                Toast.makeText(requireContext(), "Account Created with $email", Toast.LENGTH_SHORT)
-                    .show()
-                // activity intent profile
-
-
-            }.addOnFailureListener {
-                progressBar.dismiss()
-                Toast.makeText(requireContext(), "Sign Up failed ", Toast.LENGTH_SHORT).show()
-            }
-    }*/
 
 }
