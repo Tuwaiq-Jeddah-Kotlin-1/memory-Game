@@ -8,7 +8,6 @@ import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.Navigation
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,11 +18,10 @@ import com.tuwiaq.projectgame.data.FirebaseUser
 import com.tuwiaq.projectgame.data.FirebaseUser.Companion.toFirebaseUser
 import com.tuwiaq.projectgame.ui.MainFragment
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.util.*
+import java.util.logging.SimpleFormatter
 
 object FirebaseService {
     private val db by lazy { FirebaseFirestore.getInstance() }
@@ -100,6 +98,15 @@ object FirebaseService {
     fun signOut(){
         auth.signOut()
     }
+/*    fun score(score:String){
+        val rootRef:FirebaseAuth = FirebaseAuth.getInstance()
+        val ref = rootRef.currentUser?.uid
+        val o = Firebase.storage.reference.child("score $ref")
+        val map: MutableMap<String, Any> = HashMap()
+        map["score"] = 0
+
+
+    }*/
 
     suspend fun deleteImage(context:Context){
         try {
@@ -157,13 +164,5 @@ object FirebaseService {
         }
     }
 
-
-
-
-
-
-    fun f_app(application: Application){
-        application1 = application
-    }
 
 }

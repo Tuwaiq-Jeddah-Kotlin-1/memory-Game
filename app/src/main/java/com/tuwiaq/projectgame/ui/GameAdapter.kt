@@ -6,7 +6,6 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.media.MediaPlayer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +27,7 @@ class GameAdapter(
     var context: Context,
     var level: Int,
     val cards: List<FlickerPhoto>,
-    private var cardClickListner: CardClickListner,
+     val cardClickListner: CardClickListner,
     val cardNum: NumberOfCard,val vm1:MainViewModel
 ) : RecyclerView.Adapter<GameAdapter.ViewHolder>() {
 
@@ -45,15 +44,11 @@ class GameAdapter(
     private lateinit var  mediaPlayer1: MediaPlayer
     private lateinit var mediaPlayer2: MediaPlayer
 
-
-
-
     init {
         val ar0 = cards.shuffled()
         val ar01 = ar0.shuffled()
         ar000.addAll(ar0)
         ar000.addAll(ar01)
-
     }
 
     companion object {
@@ -63,7 +58,7 @@ class GameAdapter(
 
     interface CardClickListner {
         fun onClick(position: Int, applicationContext: Context)
-        fun onWin(gg:Boolean)
+        fun onWin(v:View)
     }
 
     inner class ViewHolder(itemView: View, private var applicationContext: Context) :
@@ -86,7 +81,7 @@ class GameAdapter(
             val db by lazy { FirebaseFirestore.getInstance() }
             firebase = FirebaseAuth.getInstance()
 
-            var docRef = firebase.currentUser?.uid?.let { db.collection("ImageUrl").document(it) }
+            val docRef = firebase.currentUser?.uid?.let { db.collection("ImageUrl").document(it) }
             if (docRef != null) {
                 docRef.get()
                     .addOnSuccessListener { document ->
@@ -94,8 +89,6 @@ class GameAdapter(
                             frontImage.load(
                                 document.data.toString().replace("{ul=", "").replace("}", "")
                             )
-
-                            println(document.data.toString().replace("{ul=", "").replace("}", ""))
                         } else {
                             frontImage.setBackgroundResource(R.drawable.backg)
                         }
@@ -116,8 +109,6 @@ class GameAdapter(
                     R.animator.back_animator
                 ) as AnimatorSet
 
-                Log.e("Tag", "memoryGame $frontImage")
-
                 if (isFront[0]) {
                     front_animato.setTarget(frontImage)
                     back_animato.setTarget(image)
@@ -131,6 +122,7 @@ class GameAdapter(
                     back_animato.start()
                     front_animato.start()
                     isFront[0] = true
+
                 }
             }
 
@@ -143,6 +135,7 @@ class GameAdapter(
             //--------------------------------------------
 
             image.setOnClickListener {
+
                 if (isClicked) {
 
                 } else {
@@ -161,7 +154,7 @@ class GameAdapter(
 //                            imageAnimation(image, frontImage, isFrontList)
                             //   answer = ""
                         }
-                        answer == title.text && image != any[0] -> {
+                        answer == title.text && image != any -> {
                             answerList.add(answer)
                             answer = ""
                             imageAnimation(image, frontImage, isFrontList)
@@ -171,15 +164,14 @@ class GameAdapter(
                             vm1.gameScore = score
 
                             cardClickListner.onClick(position, context)
+                            println("-----------------1111")
+                            println(cardClickListner)
                             correctCount++
                             if (correctCount == maxCorrect) {
                                 vm1.saveScore(score)
                                  mediaPlayer1 = MediaPlayer.create(context,R.raw.win)
                                 mediaPlayer1.start()
                                 dialogWin(it)
-
-
-
                                 Toast.makeText(context, "YOU WON", Toast.LENGTH_SHORT).show()
                             }
                         }
@@ -209,7 +201,7 @@ class GameAdapter(
                 }
             }
 
-            if (position == (level -1)|| position == (level -2) ) {
+            if (position == (level -1) ) {
                 isClicked = true
 
                 GlobalScope.launch(Dispatchers.Main) {
@@ -249,6 +241,7 @@ class GameAdapter(
 
         return ViewHolder(view, context)
     }
+
     fun dialogWin(view:View){
         val views = View.inflate(context,R.layout.dialog_win,null)
         val builder = AlertDialog.Builder(context)
@@ -258,12 +251,60 @@ class GameAdapter(
 
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
         val home = views.findViewById<Button>(R.id.homePage)
-        home.setOnClickListener {
+        val next = views.findViewById<Button>(R.id.next)
+        val previous = views.findViewById<Button>(R.id.previous)
+        when (level) {
+            8 -> {
+                home.setOnClickListener {
 
-            cardClickListner.onWin(true)
-            dialog.dismiss()
+                    cardClickListner.onWin(it)
+                    dialog.dismiss()
 
+                }
+                next.visibility = View.VISIBLE
+                next.setOnClickListener {
+                    next.visibility = View.VISIBLE
+                    cardClickListner.onWin(it)
+                    dialog.dismiss()
+                }
+            }
+            12 ->{
+                home.setOnClickListener {
+
+                    cardClickListner.onWin(it)
+                    dialog.dismiss()
+
+                }
+                next.visibility = View.VISIBLE
+                next.setOnClickListener {
+                    next.visibility = View.VISIBLE
+                    cardClickListner.onWin(it)
+                    dialog.dismiss()
+                }
+                previous.visibility = View.VISIBLE
+                previous.setOnClickListener {
+                    previous.visibility = View.VISIBLE
+                    cardClickListner.onWin(it)
+                    dialog.dismiss()
+                }
+
+            }
+            16 ->{
+                home.setOnClickListener {
+
+                    cardClickListner.onWin(it)
+                    dialog.dismiss()
+
+                }
+                previous.visibility = View.VISIBLE
+                previous.setOnClickListener {
+                    previous.visibility = View.VISIBLE
+                    cardClickListner.onWin(it)
+                    dialog.dismiss()
+                }
+            }
         }
+
 
     }
 
@@ -274,6 +315,7 @@ class GameAdapter(
         holder.title.text = photo.title
         holder.title.textSize = 0.0f
         holder.bind(photo, position)
+
 
     }
 

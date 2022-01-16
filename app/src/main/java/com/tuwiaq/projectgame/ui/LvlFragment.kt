@@ -22,6 +22,7 @@ class LvlFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var savedScore: TextView
 
+
     private val vm by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
@@ -67,23 +68,51 @@ class LvlFragment : Fragment() {
                         savedScore.text = vm.gameScore.toString()
                     }
 
-                    override fun onWin(gg: Boolean) {
-                     if (gg){
-                       if (levelHeight == 8){
-                           val action = LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.MEDIUM.numberOfCardToString())
-                           findNavController().navigate(action)
+                    override fun onWin(v:View) {
 
-                       }else if(levelHeight == 16){
-                           val action = LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.HARD.numberOfCardToString())
-                           findNavController().navigate(action)
+                        when (levelHeight) {
+                            8 -> {
+                               when(v.id){
+                                  R.id.homePage ->  findNavController().navigate(R.id.action_lvlOneFragment_to_mainFragment)
+                                  R.id.next -> {
+                                      val action =
+                                          LvlFragmentDirections.actionLvlOneFragmentSelf(
+                                              NumberOfCard.MEDIUM.numberOfCardToString()
+                                          )
+                                      findNavController().navigate(action)
+                                  }
+                               }
 
-                       }else{
+                            }
 
-                         findNavController().navigate(R.id.action_lvlOneFragment_to_mainFragment)
+                            12-> {
+                                when(v.id){
+                                    R.id.homePage ->  findNavController().navigate(R.id.action_lvlOneFragment_to_mainFragment)
+                                    R.id.next -> {
+                                        val action =
+                                            LvlFragmentDirections.actionLvlOneFragmentSelf(
+                                                NumberOfCard.HARD.numberOfCardToString()
+                                            )
+                                        findNavController().navigate(action)
+                                    }
+                                    R.id.previous ->{val action =
+                                        LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.EASY.numberOfCardToString())
+                                        findNavController().navigate(action)}
+                                }
 
-                       }
-                     }
+                            }
+                            16 -> {
+                                when(v.id){
+                                    R.id.homePage ->  findNavController().navigate(R.id.action_lvlOneFragment_to_mainFragment)
+                                    R.id.previous ->{val action =
+                                        LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.EASY.numberOfCardToString())
+                                        findNavController().navigate(action)}
+                                }
+                            }
+
+                        }
                     }
+
                 },cardNum,vm1 = vm
             )
 

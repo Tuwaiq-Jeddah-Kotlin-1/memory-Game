@@ -106,7 +106,7 @@ class MainFragment : Fragment() {
         emailPro = view.findViewById(R.id.logedInAS)
         LogOutBtn = view.findViewById(R.id.LogOutBtn)
         back_image = view.findViewById(R.id.textBack)
-        total.text = vm.getSaveSco()
+
 
         firebase = FirebaseAuth.getInstance()
         checkUser()
@@ -148,7 +148,7 @@ class MainFragment : Fragment() {
             showLoading()
             Handler(Looper.getMainLooper()).postDelayed({
                 hideLoading()
-            }, 4000)
+            }, 3000)
         }
 
         btn_easy = view.findViewById(R.id.easy_lvl)
@@ -163,7 +163,7 @@ class MainFragment : Fragment() {
             showLoading()
             Handler(Looper.getMainLooper()).postDelayed({
                 hideLoading()
-            }, 4000)
+            }, 3000)
 
         }
         btn_hard = view.findViewById(R.id.hard_lvl)
@@ -177,7 +177,7 @@ class MainFragment : Fragment() {
             showLoading()
             Handler(Looper.getMainLooper()).postDelayed({
                 hideLoading()
-            }, 4000)
+            }, 3000)
 
             /*  android.os.Handler().postDelayed(
                   {
@@ -227,6 +227,8 @@ class MainFragment : Fragment() {
     private fun checkUser() {
         val fierbaseUser = firebase.currentUser?.email
         if (fierbaseUser != null) {
+            total.text = vm.getSaveSco()
+           // acc_state.getScore("")
             val email = fierbaseUser
             emailPro.text = email
             LogOutBtn.visibility = View.VISIBLE
@@ -236,6 +238,7 @@ class MainFragment : Fragment() {
                 acc_state.signOutFromAcc()
                 //  firebase.signOut()
                 checkUser()
+
                 refreshCurrentFragment()
             }
 
@@ -387,66 +390,6 @@ class MainFragment : Fragment() {
         }
     }
 
-
-/*    private fun deleteFile() = CoroutineScope(Dispatchers.IO).launch {
-        try {
-
-
-            (firebase.currentUser?.uid?.let { it1 ->
-                db.collection("ImageUrl").document(
-                    it1
-                ).delete()
-            }?.addOnSuccessListener {
-                Toast.makeText(context, "Successfully deleted image", Toast.LENGTH_SHORT).show()
-
-            }?.addOnFailureListener {
-                Toast.makeText(context, "failed to delete the image", Toast.LENGTH_SHORT).show()
-
-            })
-        } catch (e: Exception) {
-            withContext(Dispatchers.Main) {
-                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-            }
-        }
-    }*/
-
- /*   fun addEvent(imageUri: Uri) {
-        val formatter = SimpleDateFormat("yyy-MM-dd-HH-mm-ss")
-        val now = Date()
-        val fileName = formatter.format(now)
-        var storageRef = Firebase.storage.reference.child("images/$fileName.jpg")
-
-        try {
-            storageRef.putFile(imageUri)
-                .addOnSuccessListener { taskSnapshot ->
-                    taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
-                        //Add event to FireStore
-                        val docData = hashMapOf(
-                            "ul" to it.toString()
-                        )
-                        println("-----------------------------------")
-                        println(firebase.currentUser?.uid)
-                        firebase.currentUser?.uid?.let { it1 ->
-                            db.collection("ImageUrl").document(
-                                it1
-
-                            ).set(docData)
-                        }
-
-                    }.addOnFailureListener {
-                        Log.e(Tag, "Error upload the image ", it)
-
-                    }
-                }
-
-
-        } catch (e: Exception) {
-            Log.e(Tag, "Error add the event ", e)
-
-        }
-
-    }*/
-
     fun showChangeLang() {
         val b = arrayOf("english", "عربي")
         val hBuild = AlertDialog.Builder(context)
@@ -479,8 +422,8 @@ class MainFragment : Fragment() {
             conf,
             requireContext().resources.displayMetrics
         )
-        var sharedpref1 = requireContext().getSharedPreferences("My_pref", MODE_PRIVATE)
-        var editor = sharedpref1.edit()
+        val sharedpref1 = requireContext().getSharedPreferences("My_pref", MODE_PRIVATE)
+        val editor = sharedpref1.edit()
         editor.putString("My_Lang", s)
         editor.apply()
 
