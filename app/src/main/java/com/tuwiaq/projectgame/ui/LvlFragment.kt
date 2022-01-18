@@ -1,5 +1,6 @@
 package com.tuwiaq.projectgame.ui
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -21,6 +22,8 @@ class LvlFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var savedScore: TextView
+    private lateinit var progressBar: ProgressDialog
+
 
 
     private val vm by lazy {
@@ -46,7 +49,15 @@ class LvlFragment : Fragment() {
         cardNum = level
         val levelHeight = level.getHeight()
 
-        recyclerView = view.findViewById(R.id.rvRecycleView)
+
+        progressBar = ProgressDialog(context)
+        progressBar.setTitle(getString(R.string.Please_wait))
+        progressBar.setMessage(getString(R.string.Logging_in))
+        progressBar.setCanceledOnTouchOutside(false)
+
+
+
+       recyclerView = view.findViewById(R.id.rvRecycleView)
 
         savedScore = view.findViewById(R.id.count)
 
@@ -75,11 +86,13 @@ class LvlFragment : Fragment() {
                                when(v.id){
                                   R.id.homePage ->  findNavController().navigate(R.id.action_lvlOneFragment_to_mainFragment)
                                   R.id.next -> {
+
                                       val action =
                                           LvlFragmentDirections.actionLvlOneFragmentSelf(
                                               NumberOfCard.MEDIUM.numberOfCardToString()
                                           )
                                       findNavController().navigate(action)
+
                                   }
                                }
 
@@ -97,7 +110,11 @@ class LvlFragment : Fragment() {
                                     }
                                     R.id.previous ->{val action =
                                         LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.EASY.numberOfCardToString())
-                                        findNavController().navigate(action)}
+                                        findNavController().navigate(action)
+
+
+                                    }
+
                                 }
 
                             }
@@ -106,7 +123,9 @@ class LvlFragment : Fragment() {
                                     R.id.homePage ->  findNavController().navigate(R.id.action_lvlOneFragment_to_mainFragment)
                                     R.id.previous ->{val action =
                                         LvlFragmentDirections.actionLvlOneFragmentSelf(NumberOfCard.EASY.numberOfCardToString())
-                                        findNavController().navigate(action)}
+                                        findNavController().navigate(action)
+
+                                    }
                                 }
                             }
 

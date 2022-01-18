@@ -13,6 +13,7 @@ data class FlickrListPhotos( //list of photo
     val photo : List<FlickerPhoto>
 )
 data class FlickerPhoto (
+    val id:String,
     val title:String,
     val url_s:String,
 )

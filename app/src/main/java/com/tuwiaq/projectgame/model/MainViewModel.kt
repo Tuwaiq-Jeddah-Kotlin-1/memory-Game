@@ -53,13 +53,13 @@ class MainViewModel(context: Application) : AndroidViewModel(context) {
     var editor = sharedPreference.edit()
 
     fun saveScore(score1:Int){
-        editor.putInt("username", getSaveSco().toInt() + score1)
+        editor.putInt("${FirebaseService.auth.currentUser?.uid}", getSaveSco().toInt() + score1)
         editor.apply()
     }
    /* fun getScore(score11: String) =viewModelScope.launch {
         FirebaseService.score(score11)
     }*/
-    fun getSaveSco() = sharedPreference.getInt("username", 0).toString()
+    fun getSaveSco() = sharedPreference.getInt("${FirebaseService.auth.currentUser?.uid}", 0).toString()
     var gameScore = 0
 
 

@@ -65,14 +65,17 @@ class LogInFragment : Fragment() {
     }
 
 
+
+
     private fun validDate() {
             email = ema.editText!!.text.toString().trim()
           password = pass.editText!!.text.toString()
-        if (email.isEmpty()||password.isEmpty()){
 
+        if (email.isEmpty()||password.isEmpty()){
             Toast.makeText(requireContext(),"Invalid email or password format",Toast.LENGTH_SHORT).show()
         }else{
             acc_logIn.signIn(email, password,requireView())
+
         }
 
      }
