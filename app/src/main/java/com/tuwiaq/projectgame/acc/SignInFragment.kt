@@ -68,6 +68,7 @@ class SignInFragment : Fragment() {
                 Toast.LENGTH_LONG
             ).show()
         } else {
+
             acc_vm.signUp(email, password)
         }
 

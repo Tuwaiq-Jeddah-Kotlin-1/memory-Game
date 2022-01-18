@@ -17,8 +17,6 @@ import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Constraints
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.core.content.FileProvider
@@ -174,6 +172,7 @@ class MainFragment : Fragment() {
             val action =
                 MainFragmentDirections.actionMainFragmentToLvlOneFragment(NumberOfCard.HARD.numberOfCardToString())
             findNavController().navigate(action)
+
             showLoading()
             Handler(Looper.getMainLooper()).postDelayed({
                 hideLoading()
@@ -255,7 +254,7 @@ class MainFragment : Fragment() {
 
     private fun initUI() {
         uploadImage.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                 if (checkSelfPermission(
                         requireContext(),
                         Manifest.permission.READ_EXTERNAL_STORAGE
@@ -275,6 +274,7 @@ class MainFragment : Fragment() {
             }
         }
     }
+
 
 
     override fun onRequestPermissionsResult(

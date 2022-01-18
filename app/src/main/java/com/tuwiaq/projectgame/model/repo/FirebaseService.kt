@@ -25,9 +25,8 @@ import java.util.logging.SimpleFormatter
 
 object FirebaseService {
     private val db by lazy { FirebaseFirestore.getInstance() }
-    private val auth:FirebaseAuth = FirebaseAuth.getInstance()
-    private lateinit var firebase: FirebaseAuth
-    private lateinit var application1:Application
+     val auth:FirebaseAuth = FirebaseAuth.getInstance()
+
 
 
     suspend fun getData(): FirebaseUser?{

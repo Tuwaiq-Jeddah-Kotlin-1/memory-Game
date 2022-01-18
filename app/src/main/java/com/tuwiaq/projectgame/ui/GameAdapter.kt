@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.media.MediaPlayer
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,12 @@ import com.tuwiaq.projectgame.data.FlickerPhoto
 import com.tuwiaq.projectgame.model.MainViewModel
 
 import kotlinx.coroutines.*
+import android.app.Activity
+
+import android.util.DisplayMetrics
+
+
+
 
 class GameAdapter(
     var context: Context,
@@ -54,6 +61,8 @@ class GameAdapter(
     companion object {
         var isClicked = false
         const val STOCK_SHARED_KEY = "lastStockValue"
+
+
     }
 
     interface CardClickListner {
@@ -77,7 +86,7 @@ class GameAdapter(
         @SuppressLint("CommitPrefEdits")
         fun bind(photo: FlickerPhoto?, position: Int) {
             image.load(photo?.url_s)
-            title.text = photo?.title
+            title.text = photo?.id
             val db by lazy { FirebaseFirestore.getInstance() }
             firebase = FirebaseAuth.getInstance()
 
@@ -125,7 +134,6 @@ class GameAdapter(
 
                 }
             }
-
             //---------------------------------------
             hardTime.apply {
                 add(image)
@@ -161,6 +169,8 @@ class GameAdapter(
                             mediaPlayer =  MediaPlayer.create(context,R.raw.wincard)
                             mediaPlayer.start()
                             score += 50
+                            Log.e("tt","wewewe")
+
                             vm1.gameScore = score
 
                             cardClickListner.onClick(position, context)
@@ -169,6 +179,7 @@ class GameAdapter(
                             correctCount++
                             if (correctCount == maxCorrect) {
                                 vm1.saveScore(score)
+                                Log.e("tt","dialog")
                                  mediaPlayer1 = MediaPlayer.create(context,R.raw.win)
                                 mediaPlayer1.start()
                                 dialogWin(it)
@@ -237,9 +248,18 @@ class GameAdapter(
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+      /*   var height = 0;
+        val itemView: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.recycle_view, parent, false)
+        if (height == 0) height = (parent.measuredHeight * .1).toInt()
+        itemView.minimumHeight = height
+        return ViewHolder(itemView,context)
+*/
         val view = LayoutInflater.from(parent.context).inflate(R.layout.recycle_view, parent, false)
 
-        return ViewHolder(view, context)
+        return ViewHolder(view,context)
+
+
     }
 
     fun dialogWin(view:View){
@@ -311,9 +331,6 @@ class GameAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val photo = ar000[position]
-        holder.image.load(photo.url_s)
-        holder.title.text = photo.title
-        holder.title.textSize = 0.0f
         holder.bind(photo, position)
 
 
