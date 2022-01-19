@@ -2,6 +2,7 @@
 
 Memory game is a mobile app
 that brings joy full time and also challange yourself..
+Project aims to be joyful and consuming time also a good test of the player ability to memorize the image .the Project Memory Game hopes to bring some of the most ambitious and promising ideas to most player 
 
 ## Library that i used
 
